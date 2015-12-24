@@ -33,5 +33,4 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'com.cocosw:bottomsheet:1.2.0@aar'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.mmga.metroloading:metroloading:1.0.0'
 }

@@ -9,7 +9,7 @@ public class Entities {
     @SerializedName("media")
     private List<Media> medias;
 
-    private class Media {
+    public class Media {
         @SerializedName("media_url")
         private String mediaUrl;
 

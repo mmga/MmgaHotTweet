@@ -24,4 +24,9 @@ public interface TweetApi {
                                    @Query("count") int count,
                                    @Query("geocode") String geocode,
                                    @Query("lang") String language);
+
+    @GET("search/tweets.json")
+    Observable<Twitter> getTwitter(@Query("q") String content,
+                                   @Query("count") int count,
+                                   @Query("max_id") String maxId);
 }

@@ -16,6 +16,9 @@ public class Status {
     @SerializedName("entities")
     private Entities entities;
 
+    @SerializedName("id_str")
+    private String lastId;
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -46,5 +49,13 @@ public class Status {
 
     public void setEntities(Entities entities) {
         this.entities = entities;
+    }
+
+    public String getLastId() {
+        return lastId;
+    }
+
+    public void setLastId(String lastId) {
+        this.lastId = lastId;
     }
 }

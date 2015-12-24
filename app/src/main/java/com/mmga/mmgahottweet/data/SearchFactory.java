@@ -15,7 +15,12 @@ public class SearchFactory {
 
     public static Observable<Twitter> search(String content) {
 //        return search(content, DEFAULT_COUNT, DEFAULT_GEO_CODE, DEFAULT_LANGUAGE);
-        return twitterService.getTwitter(content, 20);
+        return twitterService.getTwitter(content, Constant.DEFAULT_COUNT);
+    }
+
+
+    public static Observable<Twitter> search(String content, String maxId) {
+        return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, maxId);
     }
 
 

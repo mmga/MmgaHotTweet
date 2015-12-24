@@ -24,6 +24,7 @@ import com.mmga.mmgahottweet.data.TweetApi;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.data.model.Token;
 import com.mmga.mmgahottweet.data.model.Twitter;
+import com.mmga.mmgahottweet.utils.LogUtil;
 import com.mmga.mmgahottweet.utils.SharedPrefsUtil;
 import com.mmga.mmgahottweet.utils.StatusBarCompat;
 import com.mmga.mmgahottweet.utils.ToastUtil;
@@ -43,11 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerViewAdapter mAdapter;
     LinearLayoutManager mLayoutManager;
     SwipeRefreshLayout mSwipeLayout;
+    Toolbar toolbar;
     //    Location mLocation;
     RecyclerView mRecyclerView;
     Observable<Twitter> observable;
     FloatingActionButton fab;
     private String currentSearchText;
+    private String maxId;
+    boolean isLoadingMore;
 
 
     @Override
@@ -85,13 +89,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new RecyclerViewAdapter();
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(scrollListener);
+
     }
 
     private void initPrefs() {
@@ -101,48 +107,69 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadData(String content) {
         String encodedString = urlEncodeString(content);
-        Observable.Transformer<Twitter, List<Status>> loadDataTransFormer = new LoadDataTransFormer();
+        Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
         observable = SearchFactory.search(encodedString);
         observable.compose(loadDataTransFormer)
+                .map(new Func1<Twitter, List<Status>>() {
+                    @Override
+                    public List<Status> call(Twitter twitter) {
+                        return twitter.getStatuses();
+                    }
+                })
                 .subscribe(new Subscriber<List<Status>>() {
                     @Override
                     public void onCompleted() {
                         mSwipeLayout.setRefreshing(false);
+                        isLoadingMore = false;
                         Log.d("mmga", "loadData completed");
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mSwipeLayout.setRefreshing(false);
+                        isLoadingMore = false;
+                        ToastUtil.showLong("没有搜索结果");
                         Log.d("mmga", "loadData error");
                     }
 
                     @Override
                     public void onNext(List<Status> status) {
                         mAdapter.refreshAdapterData(status);
+                        String lastId = status.get(status.size() - 1).getLastId();
+                        maxId = String.valueOf(Long.valueOf(lastId) - 1); //lastId是最后一个的id，之后请求的最大id要比它小
                     }
                 });
     }
 
     private void loadMoreData(String content) {
         String encodedString = urlEncodeString(content);
-        Observable.Transformer<Twitter, List<Status>> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString);
+        Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
+        observable = SearchFactory.search(encodedString, maxId);
         observable.compose(loadDataTransFormer)
-                .subscribe(new Subscriber<List<Status>>() {
+                .subscribe(new Subscriber<Twitter>() {
                     @Override
                     public void onCompleted() {
-                        Log.d("mmga", "completed");
+                        mSwipeLayout.setRefreshing(false);
+                        isLoadingMore = false;
+                        Log.d("mmga", "loadMore completed");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("mmga", "error");
+                        mSwipeLayout.setRefreshing(false);
+                        isLoadingMore = false;
+                        ToastUtil.showLong("没有更多了内容了");
+                        Log.d("mmga", "loadMore error = " + e.getMessage());
                     }
 
                     @Override
-                    public void onNext(List<Status> status) {
+                    public void onNext(Twitter t) {
+                        List<Status> status = t.getStatuses();
+                        String lastId = status.get(status.size() - 1).getLastId();
+                        //lastId是最后一个的id，之后请求的最大id要比它小
+                        maxId = String.valueOf(Long.valueOf(lastId) - 1);
                         mAdapter.addAdapterData(status);
+                        LogUtil.d(mAdapter.getItemCount());
                     }
                 });
     }
@@ -186,11 +213,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.fab):
-                openSearchDialog();
+                fab.setClickable(false);//防连点
                 fab.hide();
+                openSearchDialog();
                 break;
         }
     }
+
+    //监听RecyclerView滑动事件，用来判断是否滑动到底部，用来加载更多信息
+    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if ((mLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.getItemCount() - 1)
+                    && !isLoadingMore) {
+                loadMoreData(currentSearchText);
+                mSwipeLayout.setRefreshing(true);
+                isLoadingMore = true;
+            }
+        }
+    };
+
 
     private void openSearchDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -207,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             loadData(input);
                             mSwipeLayout.setRefreshing(true);
                             currentSearchText = input;
+                            toolbar.setTitle(input);
                         } else {
                             dialog.dismiss();
                         }
@@ -216,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         fab.show();
+                        fab.setClickable(true);
                     }
                 })
                 .show();
@@ -239,19 +285,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-//    Handler handler = new Handler(new Handler.Callback() {
-//        @Override
-//        public boolean handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case Constant.REFRESH:
-//                    Log.d("mmga", "refresh");
-//                    loadData(currentSearchText);
-//                    mSwipeLayout.setRefreshing(false);
-//                    break;
-//            }
-//            return false;
-//        }
-//    });
 
 //    private void initLocation() {
 //        Double latitude = 0.0;

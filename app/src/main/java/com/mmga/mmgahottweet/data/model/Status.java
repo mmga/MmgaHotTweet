@@ -13,6 +13,8 @@ public class Status {
     @SerializedName("user")
     private User user;
 
+    @SerializedName("entities")
+    private Entities entities;
 
     public String getCreatedAt() {
         return createdAt;
@@ -36,5 +38,13 @@ public class Status {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Entities getEntities() {
+        return entities;
+    }
+
+    public void setEntities(Entities entities) {
+        this.entities = entities;
     }
 }

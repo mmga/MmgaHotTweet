@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mmga.mmgahottweet.R;
 import com.mmga.mmgahottweet.data.model.Status;
+import com.mmga.mmgahottweet.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     List<Status> itemList = new ArrayList<>();
-    String detailInfo;
     Uri uri;
 
     public RecyclerViewAdapter() {
@@ -34,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         notifyDataSetChanged();
     }
 
-    public void refreshAdapterData(List<Status> statusList){
+    public void refreshAdapterData(List<Status> statusList) {
         this.itemList.clear();
         itemList.addAll(statusList);
         notifyDataSetChanged();
@@ -50,10 +50,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.content.setText(itemList.get(position).getText());
-        detailInfo = itemList.get(position).getUser().getName() + itemList.get(position).getCreatedAt();
-        holder.info.setText(detailInfo);
-
+        Status status = itemList.get(position);
+        holder.userName.setText(status.getUser().getName());
+        holder.screenName.setText("@" + status.getUser().getScreenName());
+        holder.content.setText(status.getText());
+        String time = DateUtil.parseDate(status.getCreatedAt());
+        holder.createTime.setText(time);
         uri = Uri.parse(itemList.get(position).getUser().getProfileImageUrl());
         holder.avatar.setImageURI(uri);
     }
@@ -66,14 +68,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView info;
+        TextView createTime;
+        TextView userName;
+        TextView screenName;
         TextView content;
         SimpleDraweeView avatar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            info = (TextView) itemView.findViewById(R.id.info);
+            userName = (TextView) itemView.findViewById(R.id.user_name);
+            screenName = (TextView) itemView.findViewById(R.id.screen_name);
+            createTime = (TextView) itemView.findViewById(R.id.create_time);
             content = (TextView) itemView.findViewById(R.id.content);
             avatar = (SimpleDraweeView) itemView.findViewById(R.id.avatar);
         }

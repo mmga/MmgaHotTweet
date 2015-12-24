@@ -1,46 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_marginBottom="@dimen/divider"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_marginBottom="@dimen/divider"
+    android:background="@color/white"
+    android:padding="8dp"
+    android:orientation="horizontal">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_gravity="center_vertical"
-        android:layout_margin="8dp"
-        fresco:roundAsCircle="true"
-        fresco:placeholderImage="@color/place_holder_color" />
+        android:layout_marginRight="8dp"
+        fresco:placeholderImage="@color/place_holder_color"
+        fresco:roundAsCircle="true" />
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/user_name"
+        android:textColor="@color/text_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/avatar"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:textSize="14sp"
+        tools:text="mmga1234" />
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_title"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/screen_name"
+        android:textColor="@color/screen_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/user_name"
+        android:layout_marginRight="60dp"
+        android:singleLine="true"
+        android:textSize="12sp"
+        tools:text="/@mmga123456789321654987987564312" />
 
-        <TextView
-            android:id="@+id/info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/topics_info"
-            android:textSize="12sp" />
+    <TextView
+        android:id="@+id/create_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/screen_name"
+        android:textSize="12sp"
+        tools:text="23分前" />
 
-    </LinearLayout>
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_toRightOf="@+id/avatar"
+        android:textColor="@color/text_content"
+        android:textSize="14sp"
+        tools:text="The main reason you'd create an instance this class directly is because you need to format/parse a specific machine-readable format, in which case you almost certainly want to explicitly ask for US to ensure that you get ASCII digits (rather than, say, Arabic digits)." />
 
+    <ViewStub
+        android:id="@+id/view_stub"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_toRightOf="@+id/avatar"
+        android:layout_below="@+id/content"/>
 
-</LinearLayout>
+</RelativeLayout>

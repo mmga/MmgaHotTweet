@@ -3,27 +3,28 @@
 
     <group>
         <item
-            android:id="@+id/nav_advance_search"
-            android:icon="@mipmap/ic_magnify_white_24dp"
-            android:title="@string/nav_advance_search" />
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_home_variant_grey600_24dp"
+            android:title="@string/nav_home" />
         <item
             android:id="@+id/nav_messages"
-            android:icon="@mipmap/ic_magnify_white_24dp"
+            android:icon="@mipmap/ic_account_multiple_grey600_24dp"
             android:title="@string/nav_messages" />
         <item
             android:id="@+id/nav_friends"
-            android:icon="@mipmap/ic_magnify_white_24dp"
+            android:icon="@mipmap/ic_bell_grey600_24dp"
             android:title="@string/nav_friends" />
         <item
-            android:id="@+id/nav_discussion"
-            android:icon="@mipmap/ic_magnify_white_24dp"
-            android:title="@string/nav_discussion" />
+            android:id="@+id/nav_notification"
+            android:icon="@mipmap/ic_bell_grey600_24dp"
+            android:title="@string/nav_notification" />
     </group>
 
-    <item android:title="Sub items">
+    <item android:title="@string/sub_items_title">
         <menu>
             <item
-                android:icon="@mipmap/ic_magnify_white_24dp"
+                android:id="@+id/nav_settings"
+                android:icon="@mipmap/ic_settings_grey600_24dp"
                 android:title="设置 (╮(╯▽╰)╭)" />
 
         </menu>

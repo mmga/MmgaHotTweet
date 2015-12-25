@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_magnify_white_24dp);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu_white_24dp);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         setupDrawerContent(mNavigationView);
@@ -136,18 +136,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.nav_advance_search:
-                                ToastUtil.showShort("advance search");
+                            case R.id.nav_home:
+                                ToastUtil.showShort("╮(╯▽╰)╭");
                                 break;
                             case R.id.nav_messages:
                                 ToastUtil.showShort("╮(╯▽╰)╭");
                                 break;
-                            case R.id.nav_discussion:
+                            case R.id.nav_notification:
                                 ToastUtil.showShort("╮(╯▽╰)╭");
                                 break;
                             case R.id.nav_friends:
                                 ToastUtil.showShort("╮(╯▽╰)╭");
                                 break;
+                            case R.id.nav_settings:
+                                openSettingsActivity();
                             default:
                                 break;
 

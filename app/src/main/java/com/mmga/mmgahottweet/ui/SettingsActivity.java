@@ -45,7 +45,7 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
     private void init() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.mipmap.ic_magnify_white_24dp);
+        toolbar.setNavigationIcon(R.mipmap.ic_arrow_left_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +55,7 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         langSpinner = (Spinner) findViewById(R.id.lang_spinner);
         geoSpinner = (Spinner) findViewById(R.id.geo_spinner);
 
+        //// TODO: 2015/12/25 spinner 会自动点一下第一个item，等自己写个代替
         lang = getResources().getStringArray(R.array.languages);
         langAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lang);
         langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

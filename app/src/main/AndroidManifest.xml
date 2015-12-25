@@ -25,7 +25,7 @@
 
 
         <activity android:name=".ui.SettingsActivity"
-            android:label="@string/nav_advance_search"
+            android:label="@string/action_settings"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

@@ -20,4 +20,23 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+
+
+    <style name="setting_text_large" >
+        <item name="android:textColor">@color/text_content</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+
+    <style name="setting_text_small" >
+        <item name="android:textColor">@color/screen_name</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+
+
+
+
 </resources>

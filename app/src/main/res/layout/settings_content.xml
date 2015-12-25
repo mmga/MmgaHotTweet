@@ -18,15 +18,17 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            android:text="选择语言" />
+            android:text="@string/language_setting"
+            android:textAppearance="@style/setting_text_large" />
 
-        <android.support.v7.widget.AppCompatSpinner
+        <Spinner
+            android:layout_gravity="center_vertical"
             android:id="@+id/lang_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-
             />
 
     </LinearLayout>
@@ -45,10 +47,13 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            android:text="地理位置" />
+            android:text="@string/geo_setting"
+            android:textAppearance="@style/setting_text_large" />
 
         <Spinner
+            android:layout_gravity="center_vertical"
             android:id="@+id/geo_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,8 +65,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_divider"
         android:background="@color/custom_divider" />
-
-
 
 
 </LinearLayout>

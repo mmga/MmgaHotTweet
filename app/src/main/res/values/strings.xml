@@ -14,4 +14,7 @@
     <string name="nav_header_my_name">卞云鹏</string>
     <string name="nav_header_description">点击查看/编辑</string>
     <string name="sub_items_title">系统</string>
+    <string name="result_type">内容类型</string>
+    <string name="popular_text">popular</string>
+    <string name="recent_text">recent</string>
 </resources>

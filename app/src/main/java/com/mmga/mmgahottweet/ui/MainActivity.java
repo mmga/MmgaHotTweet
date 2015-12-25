@@ -62,10 +62,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView mRecyclerView;
     Observable<Twitter> observable;
     FloatingActionButton fab;
-    private String currentSearchText;
+    private String mCurrentSearchText;
     private String maxId;
     private int mLangPos;
     boolean isLoadingMore;
+    private String mResultType;
 
 
     @Override
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadData(currentSearchText);
+                loadData(mCurrentSearchText);
             }
         });
         mSwipeLayout.post(new Runnable() {//显示loading动画
@@ -162,15 +163,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initPrefs() {
-        currentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
+        mCurrentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
         mLangPos = SharedPrefsUtil.getValue(this, "config", "langPos", Constant.LANG_DEFAULT);
+        mResultType = SharedPrefsUtil.getValue(this, "config", "resultType", Constant.TYPE_MIX);
+        LogUtil.d("initPrefs : mCurrentSearchText =" + mCurrentSearchText);
+        LogUtil.d("initPrefs : resultType =" + mResultType);
     }
 
 
     private void loadData(String content) {
         String encodedString = urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString,mLangPos);
+        observable = SearchFactory.search(encodedString, mLangPos, mResultType);
         observable.compose(loadDataTransFormer)
                 .map(new Func1<Twitter, List<Status>>() {
                     @Override
@@ -206,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loadMoreData(String content) {
         String encodedString = urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString,maxId,mLangPos);
+        observable = SearchFactory.search(encodedString, maxId, mLangPos, mResultType);
         observable.compose(loadDataTransFormer)
                 .subscribe(new Subscriber<Twitter>() {
                     @Override
@@ -253,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onCompleted() {
                         mSwipeLayout.setEnabled(true);//正确获取token之后才可以下拉刷新
                         fab.show();//获取token之后才能搜索
-                        loadData(currentSearchText);
+                        loadData(mCurrentSearchText);
                     }
 
                     @Override
@@ -302,7 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && (mLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.getItemCount() - 1)
                     && !isLoadingMore) {
-                loadMoreData(currentSearchText);
+                loadMoreData(mCurrentSearchText);
                 mSwipeLayout.setRefreshing(true);
                 isLoadingMore = true;
             }
@@ -324,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (!input.equals("")) {
                             loadData(input);
                             mSwipeLayout.setRefreshing(true);
-                            currentSearchText = input;
+                            mCurrentSearchText = input;
                             toolbar.setTitle(input);
                         } else {
                             dialog.dismiss();
@@ -350,8 +354,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStop() {
         super.onStop();
+        SharedPrefsUtil.putValue(MainActivity.this, "config", "lastSearchedText", mCurrentSearchText);
         SharedPrefsUtil.putValue(MainActivity.this, "config", "langPos", mLangPos);
+        SharedPrefsUtil.putValue(MainActivity.this, "config", "resultType", mResultType);
         LogUtil.d("onStop : langPos =" + mLangPos);
+        LogUtil.d("onStop : resultType =" + mResultType);
     }
 
     @Override
@@ -377,6 +384,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void openSettingsActivity() {
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         i.putExtra("langPos", mLangPos);
+        i.putExtra("resultType", mResultType);
         startActivityForResult(i, REQUEST_CODE);
     }
 
@@ -396,66 +404,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             mLangPos = data.getIntExtra("langPos", mLangPos);
+            mResultType = data.getStringExtra("resultType");
             LogUtil.d("result = " + data.getIntExtra("langPos", mLangPos));
         }
     }
 
-
-    //    private void initLocation() {
-//        Double latitude = 0.0;
-//        Double longitude = 0.0;
-//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED
-//                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-//                != PackageManager.PERMISSION_GRANTED) {
-//
-//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-//                    1000 * 60, 100, new LocationListener() {
-//                        @Override
-//                        public void onLocationChanged(Location location) {
-//                            if (location != null) { //如果获取到location 就把经纬度信息存到SharedPreferences中
-//                                mLocation = location;
-//                                Log.d("mmga", "location = " + mLocation.getLatitude() + " + " + mLocation.getLongitude());
-//                                SharedPrefsUtil.putValue(MainActivity.this,
-//                                        "config", "location_latitude",
-//                                        Double.doubleToRawLongBits(mLocation.getLatitude()));//转换为long再存，不会损失精度
-//                                SharedPrefsUtil.putValue(MainActivity.this,
-//                                        "config", "location_longitude",
-//                                        Double.doubleToRawLongBits(mLocation.getLongitude()));
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onStatusChanged(String provider, int status, Bundle extras) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onProviderEnabled(String provider) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onProviderDisabled(String provider) {
-//
-//                        }
-//                    });
-//
-//            //如果不能直接获取到location，尝试从SharedPreferences读取，即上次成功获取的坐标
-//            if (mLocation == null) {
-//                latitude = Double.longBitsToDouble(
-//                        SharedPrefsUtil.getValue(MainActivity.this,
-//                                "config", "location_latitude", 0));
-//                longitude = Double.longBitsToDouble(
-//                        SharedPrefsUtil.getValue(MainActivity.this,
-//                                "config", "location_longitude", 0));
-//                if (latitude == 0 && longitude == 0) {
-//                    //如果从来没成功获取过坐标，弹出提示。
-//                    ToastUtil.showLong("位置获取失败");
-//                }
-//            }
-//            Log.d("mmga", "location = " + latitude + " + " + longitude);
-//        }
-//    }
 }

@@ -14,24 +14,24 @@ public class SearchFactory {
         twitterService = ServiceGenerator.createBearerTokenService(TweetApi.class, accessToken);
     }
 
-    // TODO: 2015/12/25 扩展性太差，每加一个可选的参数都要大改
-    public static Observable<Twitter> search(String content, int langPos) {
+    public static Observable<Twitter> search(String content, int langPos, String resultType) {
+        String lang = null;
         if (langPos != 0) {
-            String langCode = LanguageCodeUtil.getLangCode(langPos);
-            return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, langCode);
-        } else {
-            return twitterService.getTwitter(content, Constant.DEFAULT_COUNT);
+            lang = LanguageCodeUtil.getLangCode(langPos);
         }
+
+        return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, lang, resultType);
     }
 
 
-    public static Observable<Twitter> search(String content, String maxId, int langPos) {
+    public static Observable<Twitter> search(String content, String maxId, int langPos, String resultType) {
+        String lang = null;
         if (langPos != 0) {
-            String langCode = LanguageCodeUtil.getLangCode(langPos);
-            return twitterService.getMoreTwitter(content, Constant.DEFAULT_COUNT, maxId, langCode);
-        } else {
-            return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, maxId);
+            lang = LanguageCodeUtil.getLangCode(langPos);
         }
+
+        return twitterService.getMoreTwitter(content, Constant.DEFAULT_COUNT, maxId, lang, resultType);
+
     }
 
 }

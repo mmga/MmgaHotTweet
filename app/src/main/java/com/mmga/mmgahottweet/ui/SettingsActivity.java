@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.mmga.mmgahottweet.R;
@@ -17,14 +18,16 @@ import com.mmga.mmgahottweet.utils.StatusBarCompat;
 import com.mmga.mmgahottweet.utils.ToastUtil;
 
 
-public class SettingsActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
+public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     Spinner langSpinner, geoSpinner;
     Toolbar toolbar;
     String[] lang;
     String[] geo;
-    String langSelected, geoSelected;
+    String resultType;
     int langPos, geoPos;
+    CheckBox recentCheckBox, popularCheckBox;
+
     private ArrayAdapter<String> langAdapter;
     private ArrayAdapter<String> geoAdapter;
 
@@ -36,13 +39,17 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
         ToastUtil.register(this);
         init();
-        Intent intent = getIntent();
-        langPos = intent.getIntExtra("langPos", Constant.LANG_DEFAULT);
-        LogUtil.d("getIntExtra = " + langPos);
+
     }
 
 
     private void init() {
+
+        Intent intent = getIntent();
+        langPos = intent.getIntExtra("langPos", Constant.LANG_DEFAULT);
+        resultType = intent.getStringExtra("resultType");
+        LogUtil.d("getIntExtra = " + langPos);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_left_white_24dp);
@@ -54,7 +61,33 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         });
         langSpinner = (Spinner) findViewById(R.id.lang_spinner);
         geoSpinner = (Spinner) findViewById(R.id.geo_spinner);
+        setupSpinner();
 
+
+        recentCheckBox = (CheckBox) findViewById(R.id.recent_checkbox);
+        popularCheckBox = (CheckBox) findViewById(R.id.popular_checkbox);
+        setCheckBoxStatus();
+        recentCheckBox.setOnClickListener(this);
+        popularCheckBox.setOnClickListener(this);
+
+    }
+
+    private void setCheckBoxStatus() {//初始化checkbox的状态
+        switch (resultType) {
+            case Constant.TYPE_MIX:
+                recentCheckBox.setChecked(true);
+                popularCheckBox.setChecked(true);
+                break;
+            case Constant.TYPE_POPULAR:
+                popularCheckBox.setChecked(true);
+                break;
+            case Constant.TYPE_RECENT:
+                recentCheckBox.setChecked(true);
+                break;
+        }
+    }
+
+    private void setupSpinner() {
         //// TODO: 2015/12/25 spinner 会自动点一下第一个item，等自己写个代替
         lang = getResources().getStringArray(R.array.languages);
         langAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lang);
@@ -69,7 +102,6 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         geoSpinner.setAdapter(geoAdapter);
         geoSpinner.setOnItemSelectedListener(this);
         geoSpinner.setSelection(2);
-
     }
 
     @Override
@@ -77,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         switch (parent.getId()) {
             case R.id.lang_spinner:
                 langPos = position;
-                LogUtil.d("click " +position);
+                LogUtil.d("click " + position);
                 break;
             case R.id.geo_spinner:
 //                geoPos = position;
@@ -92,13 +124,42 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         LogUtil.d("onNothingSelected");
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.recent_checkbox:
+                if (!recentCheckBox.isChecked() && !popularCheckBox.isChecked()) {
+                    popularCheckBox.setChecked(true);
+                }
+                break;
+            case R.id.popular_checkbox:
+                if (!popularCheckBox.isChecked() && !recentCheckBox.isChecked()) {
+                    recentCheckBox.setChecked(true);
+                }
+                break;
+        }
+    }
+
 
     private void saveSettingsAndFinish() {
+
         Intent i = new Intent();
         i.putExtra("langPos", langPos);
+        i.putExtra("resultType", getResultType());
 //        i.putExtra("geo", geoPos);
         setResult(RESULT_OK, i);
         finish();
+    }
+
+    private String getResultType() {
+        if (recentCheckBox.isChecked() && popularCheckBox.isChecked()) {
+            return Constant.TYPE_MIX;
+        } else if (recentCheckBox.isChecked()) {
+            return Constant.TYPE_RECENT;
+        } else {
+            return Constant.TYPE_POPULAR;
+        }
+
     }
 
     @Override
@@ -106,4 +167,6 @@ public class SettingsActivity extends AppCompatActivity implements  AdapterView.
         saveSettingsAndFinish();
         super.onBackPressed();
     }
+
+
 }

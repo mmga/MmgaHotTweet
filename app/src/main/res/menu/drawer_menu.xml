@@ -8,11 +8,11 @@
             android:title="@string/nav_home" />
         <item
             android:id="@+id/nav_messages"
-            android:icon="@mipmap/ic_account_multiple_grey600_24dp"
+            android:icon="@mipmap/ic_message_text_grey600_24dp"
             android:title="@string/nav_messages" />
         <item
             android:id="@+id/nav_friends"
-            android:icon="@mipmap/ic_bell_grey600_24dp"
+            android:icon="@mipmap/ic_account_multiple_grey600_24dp"
             android:title="@string/nav_friends" />
         <item
             android:id="@+id/nav_notification"

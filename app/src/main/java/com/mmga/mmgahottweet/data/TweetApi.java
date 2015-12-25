@@ -26,13 +26,9 @@ public interface TweetApi {
     //搜索、刷新
     @GET("search/tweets.json")
     Observable<Twitter> getTwitter(@Query("q") String content,
-                                   @Query("count") int count);
-
-
-    @GET("search/tweets.json")
-    Observable<Twitter> getTwitter(@Query("q") String content,
                                    @Query("count") int count,
-                                   @Query("lang") String lang);
+                                   @Query("lang") String lang,
+                                   @Query("result_type") String resultType);
 
     //加载更多
     @GET("search/tweets.json")
@@ -45,8 +41,8 @@ public interface TweetApi {
     Observable<Twitter> getMoreTwitter(@Query("q") String content,
                                        @Query("count") int count,
                                        @Query("max_id") String maxId,
-                                       @Query("lang") String lang);
-
+                                       @Query("lang") String lang,
+                                       @Query("result_type") String resultType);
 
 
 }

@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical" >
 
 
     <LinearLayout
         android:id="@+id/lang_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="0dp"
@@ -24,12 +29,12 @@
             android:textAppearance="@style/setting_text_large" />
 
         <Spinner
-            android:layout_gravity="center_vertical"
             android:id="@+id/lang_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            />
+            android:saveEnabled="true" />
 
     </LinearLayout>
 
@@ -42,7 +47,7 @@
         android:id="@+id/geo_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="24dp">
 
         <TextView
             android:layout_width="0dp"
@@ -53,10 +58,10 @@
             android:textAppearance="@style/setting_text_large" />
 
         <Spinner
-            android:layout_gravity="center_vertical"
             android:id="@+id/geo_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:entries="@array/geo" />
     </LinearLayout>
@@ -66,5 +71,65 @@
         android:layout_height="@dimen/setting_divider"
         android:background="@color/custom_divider" />
 
+    <RelativeLayout
+        android:id="@+id/result_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:text="@string/result_type"
+            android:textAppearance="@style/setting_text_large" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/recent_checkbox"
+            android:text="@string/recent_text"
+            android:textAppearance="@style/text_checkbox" />
+
+        <CheckBox
+            android:id="@+id/recent_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@+id/popular_text"
+            android:text="." />
+
+
+        <TextView
+            android:id="@+id/popular_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/popular_checkbox"
+            android:text="@string/popular_text"
+            android:textAppearance="@style/text_checkbox" />
+
+        <CheckBox
+            android:id="@+id/popular_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_divider"
+        android:background="@color/custom_divider" />
+
 
 </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>

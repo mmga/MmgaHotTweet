@@ -9,9 +9,10 @@
     <color name="screen_name">#bdbdbd</color>
     <color name="place_holder_color">#e0e0e0</color>
     <color name="colorBackground">#e0e0e0</color>
-    <color name="white">#f5f5f5</color>
-    <color name="text_user">#424242</color>
-    <color name="text_content">#616161</color>
+    <color name="white">#ffffff</color>
+    <color name="text_user">#212121</color>
+    <color name="text_content">#424242</color>
+    <color name="custom_divider">#919191</color>
 
 
 </resources>

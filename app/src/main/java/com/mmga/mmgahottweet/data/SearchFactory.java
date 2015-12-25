@@ -2,6 +2,7 @@ package com.mmga.mmgahottweet.data;
 
 
 import com.mmga.mmgahottweet.data.model.Twitter;
+import com.mmga.mmgahottweet.utils.LanguageCodeUtil;
 
 import rx.Observable;
 
@@ -13,24 +14,24 @@ public class SearchFactory {
         twitterService = ServiceGenerator.createBearerTokenService(TweetApi.class, accessToken);
     }
 
-    public static Observable<Twitter> search(String content) {
-//        return search(content, DEFAULT_COUNT, DEFAULT_GEO_CODE, DEFAULT_LANGUAGE);
-        return twitterService.getTwitter(content, Constant.DEFAULT_COUNT);
+    // TODO: 2015/12/25 扩展性太差，每加一个可选的参数都要大改
+    public static Observable<Twitter> search(String content, int langPos) {
+        if (langPos != 0) {
+            String langCode = LanguageCodeUtil.getLangCode(langPos);
+            return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, langCode);
+        } else {
+            return twitterService.getTwitter(content, Constant.DEFAULT_COUNT);
+        }
     }
 
 
-    public static Observable<Twitter> search(String content, String maxId) {
-        return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, maxId);
+    public static Observable<Twitter> search(String content, String maxId, int langPos) {
+        if (langPos != 0) {
+            String langCode = LanguageCodeUtil.getLangCode(langPos);
+            return twitterService.getMoreTwitter(content, Constant.DEFAULT_COUNT, maxId, langCode);
+        } else {
+            return twitterService.getTwitter(content, Constant.DEFAULT_COUNT, maxId);
+        }
     }
 
-
-    public static Observable<Twitter> search(String content, int count) {
-        return search(content, count, Constant.DEFAULT_GEO_CODE, Constant.DEFAULT_LANGUAGE);
-    }
-
-
-    public static Observable<Twitter> search( String content, int count,
-                                                 String geocode, String language) {
-        return twitterService.getTwitter(content, count, geocode, language);
-    }
 }

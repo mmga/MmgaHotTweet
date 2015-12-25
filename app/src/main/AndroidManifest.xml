@@ -23,6 +23,11 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".ui.SettingsActivity"
+            android:label="@string/nav_advance_search"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

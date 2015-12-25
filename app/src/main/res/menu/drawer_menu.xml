@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_advance_search"
+            android:icon="@mipmap/ic_magnify_white_24dp"
+            android:title="@string/nav_advance_search" />
+        <item
+            android:id="@+id/nav_messages"
+            android:icon="@mipmap/ic_magnify_white_24dp"
+            android:title="@string/nav_messages" />
+        <item
+            android:id="@+id/nav_friends"
+            android:icon="@mipmap/ic_magnify_white_24dp"
+            android:title="@string/nav_friends" />
+        <item
+            android:id="@+id/nav_discussion"
+            android:icon="@mipmap/ic_magnify_white_24dp"
+            android:title="@string/nav_discussion" />
+    </group>
+
+    <item android:title="Sub items">
+        <menu>
+            <item
+                android:icon="@mipmap/ic_magnify_white_24dp"
+                android:title="设置 (╮(╯▽╰)╭)" />
+
+        </menu>
+    </item>
+
+</menu>

@@ -10,23 +10,43 @@ import rx.Observable;
 
 
 public interface TweetApi {
+    //@Query("q")
+    //@Query("count")
+    //@Query("max_id")
+    //@Query("result_type")
+    //@Query("lang")
+    //@Query("geocode")
 
+
+    //获取token
     @POST("oauth2/token")
     Observable<Token> getToken(@Query("grant_type") String string);
 
 
+    //搜索、刷新
     @GET("search/tweets.json")
     Observable<Twitter> getTwitter(@Query("q") String content,
                                    @Query("count") int count);
 
-    @GET("search/tweets.json")
-    Observable<Twitter> getTwitter(@Query("q") String content,
-                                   @Query("count") int count,
-                                   @Query("geocode") String geocode,
-                                   @Query("lang") String language);
 
     @GET("search/tweets.json")
     Observable<Twitter> getTwitter(@Query("q") String content,
                                    @Query("count") int count,
-                                   @Query("max_id") String maxId);
+                                   @Query("lang") String lang);
+
+    //加载更多
+    @GET("search/tweets.json")
+    Observable<Twitter> getMoreTwitter(@Query("q") String content,
+                                       @Query("count") int count,
+                                       @Query("max_id") String maxId);
+
+
+    @GET("search/tweets.json")
+    Observable<Twitter> getMoreTwitter(@Query("q") String content,
+                                       @Query("count") int count,
+                                       @Query("max_id") String maxId,
+                                       @Query("lang") String lang);
+
+
+
 }

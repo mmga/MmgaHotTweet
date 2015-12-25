@@ -1,20 +1,29 @@
 package com.mmga.mmgahottweet.ui;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.mmga.mmgahottweet.R;
 import com.mmga.mmgahottweet.data.Constant;
 import com.mmga.mmgahottweet.data.LoadDataTransFormer;
@@ -41,9 +50,13 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final int REQUEST_CODE = 1;
     RecyclerViewAdapter mAdapter;
     LinearLayoutManager mLayoutManager;
     SwipeRefreshLayout mSwipeLayout;
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+
     Toolbar toolbar;
     //    Location mLocation;
     RecyclerView mRecyclerView;
@@ -51,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FloatingActionButton fab;
     private String currentSearchText;
     private String maxId;
+    private int mLangPos;
     boolean isLoadingMore;
 
 
@@ -72,6 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
         mSwipeLayout.setEnabled(false);
@@ -87,10 +103,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mSwipeLayout.setRefreshing(true);
             }
         });
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_magnify_white_24dp);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+        setupDrawerContent(mNavigationView);
+
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -98,17 +123,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(scrollListener);
 
+
+    }
+
+    private void setupDrawerContent(NavigationView mNavigationView) {
+
+        SimpleDraweeView myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
+        Uri uri = Uri.parse("res://com.mmga.mmgahottweet/" + R.drawable.my_avatar);
+        myAvatar.setImageURI(uri);
+        mNavigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.nav_advance_search:
+                                ToastUtil.showShort("advance search");
+                                break;
+                            case R.id.nav_messages:
+                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                break;
+                            case R.id.nav_discussion:
+                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                break;
+                            case R.id.nav_friends:
+                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                break;
+                            default:
+                                break;
+
+                        }
+                        return true;
+                    }
+                }
+
+        );
     }
 
     private void initPrefs() {
         currentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
+        mLangPos = SharedPrefsUtil.getValue(this, "config", "langPos", Constant.LANG_DEFAULT);
     }
 
 
     private void loadData(String content) {
         String encodedString = urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString);
+        observable = SearchFactory.search(encodedString,mLangPos);
         observable.compose(loadDataTransFormer)
                 .map(new Func1<Twitter, List<Status>>() {
                     @Override
@@ -144,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void loadMoreData(String content) {
         String encodedString = urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString, maxId);
+        observable = SearchFactory.search(encodedString,maxId,mLangPos);
         observable.compose(loadDataTransFormer)
                 .subscribe(new Subscriber<Twitter>() {
                     @Override
@@ -220,13 +280,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     //监听RecyclerView滑动事件，用来判断是否滑动到底部，用来加载更多信息
     RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
 
         @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            if (dy > 20) {
+                fab.hide();
+            } else if (dy < -10) {
+                fab.show();
+            }
+        }
+
+        @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if ((mLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.getItemCount() - 1)
+            if (newState == RecyclerView.SCROLL_STATE_IDLE
+                    && (mLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.getItemCount() - 1)
                     && !isLoadingMore) {
                 loadMoreData(currentSearchText);
                 mSwipeLayout.setRefreshing(true);
@@ -271,8 +343,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPrefsUtil.putValue(this, "config", "lastSearchedText", currentSearchText);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPrefsUtil.putValue(MainActivity.this, "config", "langPos", mLangPos);
+        LogUtil.d("onStop : langPos =" + mLangPos);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                openSettingsActivity();
+                return true;
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openSettingsActivity() {
+        Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+        i.putExtra("langPos", mLangPos);
+        startActivityForResult(i, REQUEST_CODE);
+    }
+
 
     private String urlEncodeString(String input) {
         String encodedStr = "";
@@ -284,9 +389,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return encodedStr;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mLangPos = data.getIntExtra("langPos", mLangPos);
+            LogUtil.d("result = " + data.getIntExtra("langPos", mLangPos));
+        }
+    }
 
 
-//    private void initLocation() {
+    //    private void initLocation() {
 //        Double latitude = 0.0;
 //        Double longitude = 0.0;
 //        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

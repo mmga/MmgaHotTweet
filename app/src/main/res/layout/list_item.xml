@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/divider"
+    android:layout_marginBottom="@dimen/recylist_divider"
     android:background="@color/white"
     android:padding="8dp"
     android:orientation="horizontal">
@@ -31,7 +31,7 @@
         android:textStyle="bold"
         android:singleLine="true"
         android:textSize="14sp"
-        tools:text="mmga1234" />
+        tools:text="mmga" />
 
     <TextView
         android:id="@+id/screen_name"
@@ -41,6 +41,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/user_name"
         android:layout_marginRight="60dp"
+        android:layout_alignBaseline="@+id/user_name"
         android:singleLine="true"
         android:textSize="12sp"
         tools:text="/@mmga123456789321654987987564312" />
@@ -51,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:textColor="@color/screen_name"
+        android:layout_alignBaseline="@+id/user_name"
         android:textSize="12sp"
         tools:text="23分前" />
 

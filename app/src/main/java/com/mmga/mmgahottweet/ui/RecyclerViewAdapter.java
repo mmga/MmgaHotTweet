@@ -52,7 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Status status = itemList.get(position);
         holder.userName.setText(status.getUser().getName());
-        holder.screenName.setText("@" + status.getUser().getScreenName());
+        holder.screenName.setText(String.format("/@%s", status.getUser().getScreenName()));
         holder.content.setText(status.getText());
         String time = DateUtil.parseDate(status.getCreatedAt());
         holder.createTime.setText(time);

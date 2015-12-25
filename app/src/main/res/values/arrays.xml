@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="languages">
+        <item>自动</item>
+        <item>中文 </item>
+        <item>English</item>
+        <item>Japanese</item>
+        <item>German</item>
+        <item>French</item>
+        <item>Korean</item>
+    </string-array>
+
+    <string-array name="geo">
+        <item>自动</item>
+        <item>中国 </item>
+        <item>美国</item>
+        <item>日本</item>
+        <item>欧洲</item>
+    </string-array>
+</resources>

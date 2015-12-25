@@ -13,4 +13,15 @@ public class Constant {
     public static final int REFRESH_DELAY = 1000;
     public static final int REFRESH = 0;
 
+
+    //语言选择器预设的位置
+    public static final int LANG_DEFAULT = 0;
+    public static final int LANG_ENGLISH = 2;
+    public static final int LANG_CHINESE = 1;
+    public static final int LANG_JAPANESE = 3;
+    public static final int LANG_FRENCH = 5;
+    public static final int LANG_GERMAN = 4;
+    public static final int LANG_KOREAN = 6;
+
+
 }

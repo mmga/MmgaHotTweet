@@ -3,7 +3,6 @@ package com.mmga.mmgahottweet.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -18,7 +17,6 @@ public class DateUtil {
 
 
     static Date date;
-    static Calendar calendar = Calendar.getInstance();
 
     public static String parseDate(String time) {
         SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);
@@ -29,7 +27,6 @@ public class DateUtil {
         }
         long timeNow = System.currentTimeMillis();
         return simpleDate(timeNow - date.getTime());
-//        return null;
 
     }
 
@@ -45,8 +42,8 @@ public class DateUtil {
         } else if (time < WEEK) {
             return "" + time / DAY + "日前";
         } else {
-            Calendar.getInstance().setTimeInMillis(time);
-            return "" + Calendar.YEAR + "-" + Calendar.MONTH + "-" + Calendar.DAY_OF_MONTH;
+            SimpleDateFormat f = new SimpleDateFormat("yy-MM-dd", Locale.ENGLISH);
+            return f.format(date);
         }
 
     }

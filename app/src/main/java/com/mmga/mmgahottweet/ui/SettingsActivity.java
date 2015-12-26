@@ -20,16 +20,15 @@ import com.mmga.mmgahottweet.utils.ToastUtil;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    Spinner langSpinner, geoSpinner;
+    Spinner langSpinner;
     Toolbar toolbar;
     String[] lang;
-    String[] geo;
     String resultType;
-    int langPos, geoPos;
-    CheckBox recentCheckBox, popularCheckBox;
+    int langPos;
+    CheckBox recentCheckBox, popularCheckBox,geoCheckBox;
 
     private ArrayAdapter<String> langAdapter;
-    private ArrayAdapter<String> geoAdapter;
+    private boolean needGeo;
 
 
     @Override
@@ -39,16 +38,15 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
         ToastUtil.register(this);
         init();
-
     }
-
 
     private void init() {
 
         Intent intent = getIntent();
         langPos = intent.getIntExtra("langPos", Constant.LANG_DEFAULT);
         resultType = intent.getStringExtra("resultType");
-        LogUtil.d("getIntExtra = " + langPos);
+        needGeo = intent.getBooleanExtra("needGeo", false);
+        LogUtil.d("getBooleanExtra = " + needGeo);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,19 +58,54 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
             }
         });
         langSpinner = (Spinner) findViewById(R.id.lang_spinner);
-        geoSpinner = (Spinner) findViewById(R.id.geo_spinner);
         setupSpinner();
 
-
+        geoCheckBox = (CheckBox) findViewById(R.id.geo_checkbox);
         recentCheckBox = (CheckBox) findViewById(R.id.recent_checkbox);
         popularCheckBox = (CheckBox) findViewById(R.id.popular_checkbox);
         setCheckBoxStatus();
         recentCheckBox.setOnClickListener(this);
         popularCheckBox.setOnClickListener(this);
+        geoCheckBox.setOnClickListener(this);
 
     }
 
+
+    private void setupSpinner() {
+        lang = getResources().getStringArray(R.array.languages);
+        langAdapter = new ArrayAdapter<>(this, R.layout.my_spinner_text, lang);
+        langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        langSpinner.setAdapter(langAdapter);
+        langSpinner.setOnItemSelectedListener(this);
+        langSpinner.setSelection(langPos);
+
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case R.id.lang_spinner:
+                langPos = position;
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        LogUtil.d("onNothingSelected");
+    }
+
+
     private void setCheckBoxStatus() {//初始化checkbox的状态
+        if (needGeo) {
+            geoCheckBox.setChecked(true);
+        } else {
+            geoCheckBox.setChecked(false);
+        }
+
         switch (resultType) {
             case Constant.TYPE_MIX:
                 recentCheckBox.setChecked(true);
@@ -85,43 +118,6 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                 recentCheckBox.setChecked(true);
                 break;
         }
-    }
-
-    private void setupSpinner() {
-        //// TODO: 2015/12/25 spinner 会自动点一下第一个item，等自己写个代替
-        lang = getResources().getStringArray(R.array.languages);
-        langAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, lang);
-        langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        langSpinner.setAdapter(langAdapter);
-        langSpinner.setOnItemSelectedListener(this);
-        langSpinner.setSelection(langPos);
-
-        geo = getResources().getStringArray(R.array.geo);
-        geoAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, geo);
-        geoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        geoSpinner.setAdapter(geoAdapter);
-        geoSpinner.setOnItemSelectedListener(this);
-        geoSpinner.setSelection(2);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()) {
-            case R.id.lang_spinner:
-                langPos = position;
-                LogUtil.d("click " + position);
-                break;
-            case R.id.geo_spinner:
-//                geoPos = position;
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        LogUtil.d("onNothingSelected");
     }
 
     @Override
@@ -137,6 +133,8 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                     recentCheckBox.setChecked(true);
                 }
                 break;
+            case R.id.geo_checkbox:
+                needGeo = geoCheckBox.isChecked();
         }
     }
 
@@ -146,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         Intent i = new Intent();
         i.putExtra("langPos", langPos);
         i.putExtra("resultType", getResultType());
-//        i.putExtra("geo", geoPos);
+        i.putExtra("needGeo", needGeo);
         setResult(RESULT_OK, i);
         finish();
     }

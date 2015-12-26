@@ -5,7 +5,7 @@ import com.mmga.mmgahottweet.data.Constant;
 /**
  * Created by mmga on 2015/12/25.
  */
-public class LanguageCodeUtil {
+public class LangCodeUtil {
     public static String LANG_DEFAULT_CODE= "default";
     public static String LANG_CHINESE_CODE= "zh";
     public static String LANG_ENGLISH_CODE= "en";

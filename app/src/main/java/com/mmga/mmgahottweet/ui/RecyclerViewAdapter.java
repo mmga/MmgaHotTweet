@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mmga.mmgahottweet.R;
+import com.mmga.mmgahottweet.data.Constant;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.utils.DateUtil;
 
@@ -63,6 +64,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return itemList == null ? 0 : itemList.size();
+    }
+
+    public boolean isShortList() {
+        return getItemCount() < Constant.DEFAULT_COUNT;
     }
 
 

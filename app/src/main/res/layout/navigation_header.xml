@@ -11,8 +11,8 @@
         android:id="@+id/my_avatar"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_centerInParent="true"
-        android:layout_margin="4dp"
+        android:layout_above="@+id/my_name"
+        android:layout_marginBottom="8dp"
         fresco:placeholderImage="@color/place_holder_color"
         fresco:roundAsCircle="true"
         />
@@ -22,11 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/edit_my_account"
-        android:padding="4dp"
+        android:layout_margin="4dp"
         android:text="@string/nav_header_my_name"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        />
 
     <TextView
         android:id="@+id/edit_my_account"

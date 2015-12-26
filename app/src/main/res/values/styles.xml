@@ -9,6 +9,8 @@
 
         <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">true</item>
         <!--<item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>-->
+
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -20,7 +22,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
+    
+    
+    <!--文字样式-->
     <style name="setting_text_large">
         <item name="android:textColor">@color/settings_text</item>
         <item name="android:textSize">18sp</item>
@@ -32,10 +36,12 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="text_checkbox">
+    <style name="setting_text_checkbox">
         <item name="android:textColor">@color/settings_text</item>
         <item name="android:textSize">16sp</item>
     </style>
 
+
+    
 
 </resources>

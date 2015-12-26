@@ -11,8 +11,8 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/avatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_gravity="center_vertical"

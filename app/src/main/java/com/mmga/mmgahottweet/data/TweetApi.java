@@ -16,6 +16,8 @@ public interface TweetApi {
     //@Query("result_type")
     //@Query("lang")
     //@Query("geocode")
+    //@Query("since_id")
+    //@Query("until")
 
 
     //获取token
@@ -28,21 +30,17 @@ public interface TweetApi {
     Observable<Twitter> getTwitter(@Query("q") String content,
                                    @Query("count") int count,
                                    @Query("lang") String lang,
-                                   @Query("result_type") String resultType);
+                                   @Query("result_type") String resultType,
+                                   @Query("geocode") String geoCode);
 
     //加载更多
     @GET("search/tweets.json")
     Observable<Twitter> getMoreTwitter(@Query("q") String content,
                                        @Query("count") int count,
-                                       @Query("max_id") String maxId);
-
-
-    @GET("search/tweets.json")
-    Observable<Twitter> getMoreTwitter(@Query("q") String content,
-                                       @Query("count") int count,
                                        @Query("max_id") String maxId,
                                        @Query("lang") String lang,
-                                       @Query("result_type") String resultType);
+                                       @Query("result_type") String resultType,
+                                       @Query("geocode") String geoCode);
 
 
 }

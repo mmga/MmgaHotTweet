@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.FrameLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.mmga.mmgahottweet.R;
 import com.mmga.mmgahottweet.data.Constant;
 import com.mmga.mmgahottweet.data.LoadDataTransFormer;
@@ -33,6 +35,7 @@ import com.mmga.mmgahottweet.data.TweetApi;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.data.model.Token;
 import com.mmga.mmgahottweet.data.model.Twitter;
+import com.mmga.mmgahottweet.utils.Geo;
 import com.mmga.mmgahottweet.utils.LogUtil;
 import com.mmga.mmgahottweet.utils.SharedPrefsUtil;
 import com.mmga.mmgahottweet.utils.StatusBarCompat;
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     SwipeRefreshLayout mSwipeLayout;
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+    SimpleDraweeView myAvatar;
 
     Toolbar toolbar;
     //    Location mLocation;
@@ -67,9 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int mLangPos;
     boolean isLoadingMore;
     private String mResultType;
+    private boolean mNeedGeo;
+    private String mGeoCode;
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
@@ -81,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initPrefs();//读取初始设置
 
-//        initLocation();
         getInitToken();
 
     }
@@ -127,27 +133,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void setupDrawerContent(NavigationView mNavigationView) {
+    private void setupDrawerContent(final NavigationView mNavigationView) {
 
-        SimpleDraweeView myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
+        myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
+        myAvatar.setOnClickListener(this);
         Uri uri = Uri.parse("res://com.mmga.mmgahottweet/" + R.drawable.my_avatar);
         myAvatar.setImageURI(uri);
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem item) {
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
                         switch (item.getItemId()) {
                             case R.id.nav_home:
-                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                ToastUtil.showShort(getString(R.string.orz));
                                 break;
                             case R.id.nav_messages:
-                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                ToastUtil.showShort(getString(R.string.orz));
                                 break;
                             case R.id.nav_notification:
-                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                ToastUtil.showShort(getString(R.string.orz));
                                 break;
                             case R.id.nav_friends:
-                                ToastUtil.showShort("╮(╯▽╰)╭");
+                                ToastUtil.showShort(getString(R.string.orz));
                                 break;
                             case R.id.nav_settings:
                                 openSettingsActivity();
@@ -163,18 +171,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initPrefs() {
+        mGeoCode = Geo.getGeocode(this);
         mCurrentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
         mLangPos = SharedPrefsUtil.getValue(this, "config", "langPos", Constant.LANG_DEFAULT);
         mResultType = SharedPrefsUtil.getValue(this, "config", "resultType", Constant.TYPE_MIX);
-        LogUtil.d("initPrefs : mCurrentSearchText =" + mCurrentSearchText);
-        LogUtil.d("initPrefs : resultType =" + mResultType);
+        mNeedGeo = SharedPrefsUtil.getValue(this, "config", "needGeo", false);
+        LogUtil.d("initPrefs : geoCode =" + mGeoCode);
     }
 
 
     private void loadData(String content) {
+        String geoString = mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO;
         String encodedString = urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString, mLangPos, mResultType);
+        observable = SearchFactory.search(encodedString, mLangPos, mResultType, geoString);
         observable.compose(loadDataTransFormer)
                 .map(new Func1<Twitter, List<Status>>() {
                     @Override
@@ -194,8 +204,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onError(Throwable e) {
                         mSwipeLayout.setRefreshing(false);
                         isLoadingMore = false;
-                        ToastUtil.showLong("没有搜索结果");
-                        Log.d("mmga", "loadData error");
+                        if (e.getMessage().equals("timeout")) {
+                            ToastUtil.showLong(getString(R.string.error_timeout));
+                        } else {
+                            ToastUtil.showLong(getString(R.string.error_data_not_found));
+                        }
+                        Log.d("mmga", "loadData error :" + e.getMessage());
                     }
 
                     @Override
@@ -208,9 +222,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void loadMoreData(String content) {
+        String geoString = mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO;
         String encodedString = urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString, maxId, mLangPos, mResultType);
+        observable = SearchFactory.search(encodedString, maxId, mLangPos, mResultType, geoString);
         observable.compose(loadDataTransFormer)
                 .subscribe(new Subscriber<Twitter>() {
                     @Override
@@ -224,7 +239,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onError(Throwable e) {
                         mSwipeLayout.setRefreshing(false);
                         isLoadingMore = false;
-                        ToastUtil.showLong("没有更多了内容了");
+                        if (e.getMessage().equals("timeout")) {
+                            ToastUtil.showLong(getString(R.string.error_timeout));
+                        } else {
+                            ToastUtil.showLong(getString(R.string.error_no_more_data));
+                        }
                         Log.d("mmga", "loadMore error = " + e.getMessage());
                     }
 
@@ -262,9 +281,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("mmga", "getTokenError");
+                        Log.d("mmga", "getTokenError : " + e.getMessage());
                         mSwipeLayout.setRefreshing(false);
-                        ToastUtil.showLong("同学，要记得科学上网啊");
+                        ToastUtil.showLong(getString(R.string.error_not_get_token));
                     }
 
                     @Override
@@ -283,6 +302,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fab.hide();
                 openSearchDialog();
                 break;
+            case (R.id.my_avatar):
+                Intent intent = new Intent(MainActivity.this, AccountActivity.class);
+                ActivityTransitionLauncher.with(MainActivity.this).from(myAvatar).launch(intent);
         }
     }
 
@@ -303,9 +325,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            //isShortList用来过滤掉没有获得token时的滑动手势，以及在结果数量不能充满整个页面时频繁触发loadMoreData的问题
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && (mLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.getItemCount() - 1)
-                    && !isLoadingMore) {
+                    && !isLoadingMore
+                    && !mAdapter.isShortList()) {
                 loadMoreData(mCurrentSearchText);
                 mSwipeLayout.setRefreshing(true);
                 isLoadingMore = true;
@@ -357,8 +381,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPrefsUtil.putValue(MainActivity.this, "config", "lastSearchedText", mCurrentSearchText);
         SharedPrefsUtil.putValue(MainActivity.this, "config", "langPos", mLangPos);
         SharedPrefsUtil.putValue(MainActivity.this, "config", "resultType", mResultType);
-        LogUtil.d("onStop : langPos =" + mLangPos);
-        LogUtil.d("onStop : resultType =" + mResultType);
+        SharedPrefsUtil.putValue(MainActivity.this, "config", "needGeo", mNeedGeo);
     }
 
     @Override
@@ -385,6 +408,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         i.putExtra("langPos", mLangPos);
         i.putExtra("resultType", mResultType);
+        i.putExtra("needGeo", mNeedGeo);
         startActivityForResult(i, REQUEST_CODE);
     }
 
@@ -405,7 +429,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             mLangPos = data.getIntExtra("langPos", mLangPos);
             mResultType = data.getStringExtra("resultType");
-            LogUtil.d("result = " + data.getIntExtra("langPos", mLangPos));
+            mNeedGeo = data.getBooleanExtra("needGeo", mNeedGeo);
+            LogUtil.d("mNeedGeo = " + data.getBooleanExtra("needGeo", mNeedGeo));
         }
     }
 

@@ -12,6 +12,7 @@
     <string name="popular_text">热门</string>
     <string name="recent_text">最新</string>
 
+    <!--菜单选项-->
     <string name="nav_header_my_name">卞云鹏</string>
     <string name="nav_header_description">点击查看简历</string>
     <string name="sub_items_title">系统</string>
@@ -20,14 +21,14 @@
     <string name="nav_friends">好友</string>
     <string name="nav_notification">通知</string>
 
-
+    <!--错误提示-->
     <string name="error_timeout">网络连接超时</string>
     <string name="error_no_more_data">没有更多了内容了</string>
     <string name="error_data_not_found">没有搜索结果</string>
     <string name="error_not_get_token">同学，要记得科学上网啊</string>
 
 
-
+    <!--占位-->
     <string name="orz">╮(╯▽╰)╭</string>
     <string name="lorem">Lorem ipsum dolor sit amet, causae graecis scriptorem ea his,
         omnes ceteros ne mel. Nobis complectitur definitiones ad vis, eam at fabulas
@@ -37,4 +38,65 @@
         sadipscing, pri splendide elaboraret no, et eum eligendi instructior. Nec
         quandopersecuti an.</string>
 
+
+    <!--简历-->
+    <string name="my_resume_title">个人简历</string>
+    <string name="github_follow">follow</string>
+    <string name="call">call</string>
+
+    <string name="education">教育背景</string>
+    <string name="education_period">2008–2012</string>
+    <string name="college">武汉大学 2008–2012\n电气工程与自动化\n本科</string>
+
+    <string name="personal_experience">个人经历</string>
+    <string name="personal_experience_content">毕业后从事电气方面的工作\n2015.04 开始自学java和android开发</string>
+
+    <string name="ability">专业技能\n(talk is cheap)</string>
+    <string name="ability_content1">熟练使用Java，熟悉面向对象编程思想
+        \n熟悉Android开发平台及发布流程
+        \n掌握UI设计、自定义控件、动画、多线程、数据存储、网络编程、多媒体相关知识
+        \n了解触摸事件传递机制，消息传递机制，ndk开发，反编译技术
+        \n会用Volley，Retrofit，Fresco，Glide，LitePal，RxJava等主流开源框架
+        \n了解基本的数据结构和算法知识\n熟练使用Android Studio开发，会用android tools来检查、优化代码。
+        使用github保存代码以及查看优秀的开源项目。遇到问题能熟练的使用google、stackoverflow搜索解决
+    </string>
+
+
+    <string name="project_experience">项目经验\n(show you my code)</string>
+    <string name="project_experience_litedo">Litedo</string>
+    <string name="project_experience_litedo_description">[便签]
+        \n使用RecyclerView承载和展示数据，通过ItemTouchHelper实现滑动删除和拖动调整位置的手势。
+        \n建立SQLite数据库存储数据。使用开源的ORM框架LitePal操作数据库。
+        \n使用了Design Support Library。
+        \n已上线豌豆荚和应用宝</string>
+    <string name="project_experience_litedo_url">https://github.com/mmga/Litedo</string>
+
+    <string name="project_experience_cloudcover">云皮儿</string>
+    <string name="project_experience_cloudcover_description">[搜索、保存音乐专辑封面]
+        \n通过网易云音乐api获取需要的数据，使用Gson解析json格式数据。
+        \n使用了Volley进行网络连接，开发过程中熟悉了LruCache和DiskLruCache，并给ImageLoader写了一个缓存。
+        \n通过TraceView工具查找出图片列表卡顿的问题之后用Glide替代了ImageLoader来展示图片。
+        \n使用了Design Support Library。
+        \n已上线豌豆荚</string>
+    <string name="project_experience_cloudcover_url">https://github.com/mmga/CloudCover</string>
+
+    <string name="project_experience_upclock">UpClock</string>
+    <string name="project_experience_upclock_description">[闹钟]
+        \n使用了Service和Broadcast Receiver，借助AlarmManager来构成定时运行的服务。
+        \n创建Service时使用了前台服务，在通知栏提示用户闹钟状态，同时提高Service的优先级。
+        \n多主题颜色的切换
+        \n已上线豌豆荚和应用宝</string>
+    <string name="project_experience_upclock_url">https://https://github.com/mmga/UpClock</string>
+
+    <string name="project_experience_metroloading">MetroLoading</string>
+    <string name="project_experience_metroloading_description">[loading动画]
+        \n简单易用，有较多的可设置属性
+        \n自定义view，使用ValueAnimator实现动画
+        \n发布在jCenter上
+        </string>
+    <string name="project_experience_metroloading_url">https://https://github.com/mmga/MetroLoading</string>
+
+
 </resources>
+
+

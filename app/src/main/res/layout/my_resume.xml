@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/my_resume_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sheet_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="centerInside"
+        android:src="@mipmap/ic_chevron_up_white_24dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/my_avatar"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginTop="16dp"
+                fresco:placeholderImage="@drawable/my_avatar"
+                fresco:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/my_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/nav_header_my_name"
+                android:textColor="@color/text_user"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/my_connection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="@dimen/sheet_parallax_vertical"
+                android:drawableLeft="@mipmap/ic_phone_grey600_18dp"
+                android:text="@string/call"
+                android:textColor="@color/text_content"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/my_github"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sheet_parallax_vertical"
+                android:drawableLeft="@mipmap/ic_github_circle_grey600_18dp"
+                android:text="@string/github_follow"
+                android:textColor="@color/text_content"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/place_holder_color" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/my_resume_title"
+                    android:textSize="24sp" />
+
+
+                <LinearLayout
+                    android:id="@+id/resume_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/sheet_parallax_vertical"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp">
+
+                    <!--教育背景-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/education"
+                        android:background="@color/resume_title"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/college"
+                        android:textAppearance="@style/resume_description" />
+
+                    <View android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackground"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        />
+                    <!--个人经历-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/resume_title"
+                        android:text="@string/personal_experience"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/personal_experience_content"
+                        android:textAppearance="@style/resume_description" />
+
+                    <View android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackground"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        />
+
+                    <!--专业技能-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/ability"
+                        android:background="@color/resume_title"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/ability_content1"
+                        android:textAppearance="@style/resume_description" />
+
+
+
+                    <!--项目经验-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/resume_title"
+                        android:text="@string/project_experience"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_litedo"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_litedo_description"
+                        android:textAppearance="@style/resume_description" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_litedo_url"
+                        android:textAppearance="@style/resume_description" />
+
+                    <View android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackground"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_cloudcover"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_cloudcover_description"
+                        android:textAppearance="@style/resume_description" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_cloudcover_url"
+                        android:textAppearance="@style/resume_description" />
+
+                    <View android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackground"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_upclock"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_upclock_description"
+                        android:textAppearance="@style/resume_description" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_upclock_url"
+                        android:textAppearance="@style/resume_description" />
+
+
+                    <View android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackground"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_metroloading"
+                        android:textAppearance="@style/resume_title" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_metroloading_description"
+                        android:textAppearance="@style/resume_description" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/project_experience_metroloading_url"
+                        android:textAppearance="@style/resume_description" />
+
+                    <View android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@color/colorBackground"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+</LinearLayout>

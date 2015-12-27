@@ -33,5 +33,4 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'com.flipboard:bottomsheet-core:1.5.0'
-    compile 'com.flipboard:bottomsheet-commons:1.5.0'
 }

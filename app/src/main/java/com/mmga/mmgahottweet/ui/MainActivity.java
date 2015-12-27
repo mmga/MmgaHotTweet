@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 loadData(mCurrentSearchText);
             }
         });
-        mSwipeLayout.post(new Runnable() {//显示loading动画
+        mSwipeLayout.post(new Runnable() {//把setRefreshing(true)排队，确保能获得位置信息
             @Override
             public void run() {
                 mSwipeLayout.setRefreshing(true);
@@ -315,8 +316,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.my_resume):
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-//                bottomSheet.showWithSheetView(LayoutInflater.
-//                        from(MainActivity.this).inflate(R.layout.my_resume, bottomSheet, false));
+                bottomSheet.showWithSheetView(LayoutInflater.
+                        from(MainActivity.this).inflate(R.layout.my_resume, bottomSheet, false),
+                        new InsetViewTransformer());
                 break;
             case (R.id.retry):
                 internetError.setVisibility(View.GONE);

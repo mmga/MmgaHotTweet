@@ -55,20 +55,29 @@
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CUSTOM_FILTER" value="mmga" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/app/src/main/res/layout/settings_content.xml" description="            android:padding=&quot;24dp&quot;&gt;&#10;&#10;            &lt;..." line="42" />
     <bookmark url="file://$PROJECT_DIR$/app/src/main/res/layout/settings_content.xml" description="            android:padding=&quot;24dp&quot;&gt;&#10;&#10;            &lt;..." line="69" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="28302a90-28cc-4212-ace9-27ca624eac49" name="Default" comment="修些小bug">
+    <list default="true" id="28302a90-28cc-4212-ace9-27ca624eac49" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/DensityUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/InsetViewTransformer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/my_resume.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/sheet_bg.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/values-en/strings.xml" />
+      <change type="DELETED" beforePath="D:\AndroidProject\MmgaHotTweet\.idea\libraries\bottomsheet_commons_1_5_0.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/RecyclerViewAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/RecyclerViewAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/navigation_header.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/navigation_header.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="MmgaHotTweet.iws" />
@@ -102,29 +111,29 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-30.576923">
-              <caret line="317" column="17" selection-start-line="317" selection-start-column="17" selection-end-line="317" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="317" column="56" selection-start-line="317" selection-start-column="56" selection-end-line="317" selection-end-column="56" />
               <folding>
                 <element signature="method#onCreate#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#initPrefs#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#loadData#0;class#MainActivity#0" expanded="false" />
-                <element signature="class#8134:9397" expanded="false" />
-                <element signature="method#onCompleted#0;class#8134:9397" expanded="false" />
-                <element signature="method#onError#0;class#8134:9397" expanded="false" />
-                <element signature="method#onNext#0;class#8134:9397" expanded="false" />
+                <element signature="class#8191:9454" expanded="false" />
+                <element signature="method#onCompleted#0;class#8191:9454" expanded="false" />
+                <element signature="method#onError#0;class#8191:9454" expanded="false" />
+                <element signature="method#onNext#0;class#8191:9454" expanded="false" />
                 <element signature="method#loadMoreData#0;class#MainActivity#0" expanded="false" />
-                <element signature="class#9858:11248" expanded="false" />
-                <element signature="method#onCompleted#0;class#9858:11248" expanded="false" />
-                <element signature="method#onError#0;class#9858:11248" expanded="false" />
-                <element signature="method#onNext#0;class#9858:11248" expanded="false" />
+                <element signature="class#9915:11305" expanded="false" />
+                <element signature="method#onCompleted#0;class#9915:11305" expanded="false" />
+                <element signature="method#onError#0;class#9915:11305" expanded="false" />
+                <element signature="method#onNext#0;class#9915:11305" expanded="false" />
                 <element signature="method#getInitToken#0;class#MainActivity#0" expanded="false" />
-                <element signature="class#11811:12786" expanded="false" />
-                <element signature="method#onCompleted#0;class#11811:12786" expanded="false" />
-                <element signature="method#onError#0;class#11811:12786" expanded="false" />
-                <element signature="method#onNext#0;class#11811:12786" expanded="false" />
-                <element signature="class#13557:14554" expanded="false" />
-                <element signature="method#onScrolled#0;class#13557:14554" expanded="false" />
-                <element signature="method#onScrollStateChanged#0;class#13557:14554" expanded="false" />
+                <element signature="class#11868:12843" expanded="false" />
+                <element signature="method#onCompleted#0;class#11868:12843" expanded="false" />
+                <element signature="method#onError#0;class#11868:12843" expanded="false" />
+                <element signature="method#onNext#0;class#11868:12843" expanded="false" />
+                <element signature="class#13662:14659" expanded="false" />
+                <element signature="method#onScrolled#0;class#13662:14659" expanded="false" />
+                <element signature="method#onScrollStateChanged#0;class#13662:14659" expanded="false" />
                 <element signature="method#openSearchDialog#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#onStop#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#onCreateOptionsMenu#0;class#MainActivity#0" expanded="false" />
@@ -137,26 +146,39 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navigation_header.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/navigation_header.xml">
+      <file leaf-file-name="my_resume.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/my_resume.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.5625">
-              <caret line="36" column="31" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.03125">
-              <caret line="56" column="46" selection-start-line="56" selection-start-column="41" selection-end-line="56" selection-end-column="46" />
+            <state vertical-scroll-proportion="-6.78125">
+              <caret line="63" column="16" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
               <folding>
-                <element signature="e#3165#3184#0" expanded="true" />
+                <element signature="e#1699#1727#0" expanded="true" />
+                <element signature="e#2092#2124#0" expanded="true" />
+                <element signature="e#2223#2237#0" expanded="true" />
+                <element signature="e#2550#2582#0" expanded="true" />
+                <element signature="e#2689#2712#0" expanded="true" />
+                <element signature="e#2846#3092#0" expanded="false" />
+                <element signature="e#3753#3778#0" expanded="true" />
+                <element signature="e#4069#4101#0" expanded="true" />
+                <element signature="e#4421#4440#0" expanded="true" />
+                <element signature="e#4822#4839#0" expanded="true" />
+                <element signature="e#5581#5610#0" expanded="true" />
+                <element signature="e#5927#5964#0" expanded="true" />
+                <element signature="e#6642#6659#0" expanded="true" />
+                <element signature="e#7041#7067#0" expanded="true" />
+                <element signature="e#7489#7517#0" expanded="true" />
+                <element signature="e#7834#7869#0" expanded="true" />
+                <element signature="e#8186#8233#0" expanded="true" />
+                <element signature="e#8556#8595#0" expanded="true" />
+                <element signature="e#9241#9280#0" expanded="true" />
+                <element signature="e#9597#9648#0" expanded="true" />
+                <element signature="e#9971#10014#0" expanded="true" />
+                <element signature="e#10660#10696#0" expanded="true" />
+                <element signature="e#11013#11061#0" expanded="true" />
+                <element signature="e#11384#11424#0" expanded="true" />
+                <element signature="e#12071#12112#0" expanded="true" />
+                <element signature="e#12429#12482#0" expanded="true" />
+                <element signature="e#12805#12850#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -165,28 +187,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.266666">
+              <caret line="66" column="35" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.333333">
-              <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.22137405">
+              <caret line="42" column="37" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecyclerViewAdapter.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/RecyclerViewAdapter.java">
+      <file leaf-file-name="Translations Editor" pinned="false" current-in-tab="false">
+        <entry file="android-dummy://D:\AndroidProject\MmgaHotTweet/app/Translations Editor">
+          <provider selected="true" editor-type-id="string-resource-editor">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InsetViewTransformer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/InsetViewTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5177305">
-              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
               <folding>
-                <element signature="method#setAdapterData#0;class#RecyclerViewAdapter#0" expanded="false" />
-                <element signature="method#refreshAdapterData#0;class#RecyclerViewAdapter#0" expanded="false" />
-                <element signature="method#onCreateViewHolder#0;class#RecyclerViewAdapter#0" expanded="false" />
-                <element signature="e#2920#2921#0" expanded="true" />
-                <element signature="e#2982#2983#0" expanded="true" />
+                <element signature="e#1027#1092#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DensityUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/DensityUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -196,11 +251,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="valueResourceFile" />
-        <option value="resourceFile" />
         <option value="layoutResourceFile" />
-        <option value="Class" />
         <option value="layoutResourceFile_vertical" />
+        <option value="Class" />
+        <option value="resourceFile" />
+        <option value="valueResourceFile" />
       </list>
     </option>
   </component>
@@ -680,11 +735,6 @@
                 <option name="description" value="Prepare com.facebook.fresco:imagepipeline:0.8.1" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComFacebookFrescoImagepipeline081Library" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare com.flipboard:bottomsheet-commons:1.5.0" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComFlipboardBottomsheetCommons150Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.flipboard:bottomsheet-core:1.5.0" />
@@ -1284,11 +1334,6 @@
                 <option name="name" value="prepareComFacebookFrescoImagepipeline081Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.flipboard:bottomsheet-commons:1.5.0" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComFlipboardBottomsheetCommons150Library" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Prepare com.flipboard:bottomsheet-core:1.5.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareComFlipboardBottomsheetCore150Library" />
@@ -1486,7 +1531,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="D:\AndroidProject\MmgaHotTweet" value="4352647116144" />
+        <entry key="D:\AndroidProject\MmgaHotTweet" value="4352716945622" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1713,7 +1758,6 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/fresco/0.8.1/f0a4f04318123e1597514b2abf56b7e66581f3f8/fresco-0.8.1.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.rengwuxian.materialedittext/library/2.1.4/a14709b74bc6982a5cfc3b193b6a30881b790169/library-2.1.4.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.flipboard/bottomsheet-core/1.5.0/9cf9ecb1cf083be581f6d19d4140a9b7c3be507d/bottomsheet-core-1.5.0.aar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.flipboard/bottomsheet-commons/1.5.0/6a70268722dc8f5e07d18c2d1cd7779c8c7f4f8b/bottomsheet-commons-1.5.0.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1.aar" />
                             <option value="$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar" />
@@ -1864,10 +1908,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/data/LoadDataTransFormer.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/list.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/navigation_body.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/data/model/LanguageCode.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/data/model/SimpleLanguageCode.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/divider.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/divider.xml" />
@@ -1878,7 +1918,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/SearchActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/search_content.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/LanguageCodeUtil.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_settings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/DateUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/arrays.xml" />
@@ -1894,27 +1933,32 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/SettingsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/my_spinner_text.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/settings_content.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/transition/activity_explode.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_account.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/my_consum.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/AccountActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/my_resume.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/data/model/tweet/Twitter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/data/model/Status.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/rt_info.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/data/model/ReTweet.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/internet_error.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/navigation_header.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/RecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/sheet_bg.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/DensityUtil.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/InsetViewTransformer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/my_resume.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -2204,6 +2248,10 @@
               <option name="myItemId" value="mmgahottweet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2270,6 +2318,40 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MmgaHotTweet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MmgaHotTweet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mmgahottweet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2363,7 +2445,7 @@
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0bb6397c" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="LVFE5L95VKOBSO6H" />
     <property name="DEBUGGABLE_DEVICE" value="xiaomi-mi_3-0bb6397c" />
     <property name="DEBUGGABLE_PROCESS" value="com.mmga.mmgahottweet" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -2383,11 +2465,11 @@
       <recent name="com.mmga.mmgahottweet.data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\java\com\mmga\mmgahottweet\utils" />
+      <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\res\layout" />
       <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\res\mipmap-xxxhdpi" />
       <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\res\mipmap-xxhdpi" />
       <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\res\mipmap-xhdpi" />
-      <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\res\mipmap-mdpi" />
-      <recent name="D:\AndroidProject\MmgaHotTweet\app\src\main\res\mipmap-hdpi" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -2612,7 +2694,13 @@
       <option name="project" value="LOCAL" />
       <updated>1451185578339</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="基本功能完成，准备加个简历页">
+      <created>1451207462816</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1451207462816</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2628,15 +2716,15 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4385475" sideWeight="0.49425286" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29885057" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23778735" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3226257" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24497126" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25215518" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297414" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2671,7 +2759,9 @@
     <MESSAGE value="加入跟据位置搜索附近tweet&#10;试验点新东西PreLollipopTransition" />
     <MESSAGE value="." />
     <MESSAGE value="把列表中RT的内容分离出来" />
-    <option name="LAST_COMMIT_MESSAGE" value="把列表中RT的内容分离出来" />
+    <MESSAGE value="。" />
+    <MESSAGE value="基本功能完成，准备加个简历页" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本功能完成，准备加个简历页" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2681,25 +2771,11 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="30" />
+      <option name="time" value="31" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/SharedPrefsUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3328467">
-          <caret line="99" column="22" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/ToastUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2712,12 +2788,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="android-dummy://D:\AndroidProject\MmgaHotTweet/app/Translations Editor">
-      <provider selected="true" editor-type-id="string-resource-editor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/LogUtil.java">
@@ -2784,14 +2856,6 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29781023">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/search_dialog.xml">
@@ -2883,19 +2947,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.78125">
-          <caret line="9" column="64" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="64" />
-          <folding>
-            <element signature="e#399#439#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_settings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.75497705">
@@ -2905,22 +2956,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="33" selection-start-line="34" selection-start-column="33" selection-end-line="34" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="26" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml">
@@ -2967,14 +3002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="10" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5">
-          <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -3066,27 +3093,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.333333">
-          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.03125">
-          <caret line="56" column="46" selection-start-line="56" selection-start-column="41" selection-end-line="56" selection-end-column="46" />
-          <folding>
-            <element signature="e#3165#3184#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/navigation_header.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.5625">
@@ -3098,31 +3104,121 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="1" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/RecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.307693">
+          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+          <folding>
+            <element signature="method#setAdapterData#0;class#RecyclerViewAdapter#0" expanded="false" />
+            <element signature="method#refreshAdapterData#0;class#RecyclerViewAdapter#0" expanded="false" />
+            <element signature="method#onCreateViewHolder#0;class#RecyclerViewAdapter#0" expanded="false" />
+            <element signature="e#2920#2921#0" expanded="false" />
+            <element signature="e#2982#2983#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/sheet_bg.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19854015">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36447167">
+          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46860644">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#399#439#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/utils/DensityUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="43" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/InsetViewTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+          <folding>
+            <element signature="e#1027#1092#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="android-dummy://D:\AndroidProject\MmgaHotTweet//Theme Editor">
+      <provider selected="true" editor-type-id="themeEditor">
+        <state theme-name="AppTheme" module-name="app" proportion="0.5" />
+      </provider>
+    </entry>
+    <entry file="android-dummy://D:\AndroidProject\MmgaHotTweet/app/Translations Editor">
+      <provider selected="true" editor-type-id="string-resource-editor">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.576923">
-          <caret line="317" column="17" selection-start-line="317" selection-start-column="17" selection-end-line="317" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="317" column="56" selection-start-line="317" selection-start-column="56" selection-end-line="317" selection-end-column="56" />
           <folding>
             <element signature="method#onCreate#0;class#MainActivity#0" expanded="false" />
             <element signature="method#initPrefs#0;class#MainActivity#0" expanded="false" />
             <element signature="method#loadData#0;class#MainActivity#0" expanded="false" />
-            <element signature="class#8134:9397" expanded="false" />
-            <element signature="method#onCompleted#0;class#8134:9397" expanded="false" />
-            <element signature="method#onError#0;class#8134:9397" expanded="false" />
-            <element signature="method#onNext#0;class#8134:9397" expanded="false" />
+            <element signature="class#8191:9454" expanded="false" />
+            <element signature="method#onCompleted#0;class#8191:9454" expanded="false" />
+            <element signature="method#onError#0;class#8191:9454" expanded="false" />
+            <element signature="method#onNext#0;class#8191:9454" expanded="false" />
             <element signature="method#loadMoreData#0;class#MainActivity#0" expanded="false" />
-            <element signature="class#9858:11248" expanded="false" />
-            <element signature="method#onCompleted#0;class#9858:11248" expanded="false" />
-            <element signature="method#onError#0;class#9858:11248" expanded="false" />
-            <element signature="method#onNext#0;class#9858:11248" expanded="false" />
+            <element signature="class#9915:11305" expanded="false" />
+            <element signature="method#onCompleted#0;class#9915:11305" expanded="false" />
+            <element signature="method#onError#0;class#9915:11305" expanded="false" />
+            <element signature="method#onNext#0;class#9915:11305" expanded="false" />
             <element signature="method#getInitToken#0;class#MainActivity#0" expanded="false" />
-            <element signature="class#11811:12786" expanded="false" />
-            <element signature="method#onCompleted#0;class#11811:12786" expanded="false" />
-            <element signature="method#onError#0;class#11811:12786" expanded="false" />
-            <element signature="method#onNext#0;class#11811:12786" expanded="false" />
-            <element signature="class#13557:14554" expanded="false" />
-            <element signature="method#onScrolled#0;class#13557:14554" expanded="false" />
-            <element signature="method#onScrollStateChanged#0;class#13557:14554" expanded="false" />
+            <element signature="class#11868:12843" expanded="false" />
+            <element signature="method#onCompleted#0;class#11868:12843" expanded="false" />
+            <element signature="method#onError#0;class#11868:12843" expanded="false" />
+            <element signature="method#onNext#0;class#11868:12843" expanded="false" />
+            <element signature="class#13662:14659" expanded="false" />
+            <element signature="method#onScrolled#0;class#13662:14659" expanded="false" />
+            <element signature="method#onScrollStateChanged#0;class#13662:14659" expanded="false" />
             <element signature="method#openSearchDialog#0;class#MainActivity#0" expanded="false" />
             <element signature="method#onStop#0;class#MainActivity#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#MainActivity#0" expanded="false" />
@@ -3134,17 +3230,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mmga/mmgahottweet/ui/RecyclerViewAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/my_resume.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5177305">
-          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+        <state vertical-scroll-proportion="-6.78125">
+          <caret line="63" column="16" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
           <folding>
-            <element signature="method#setAdapterData#0;class#RecyclerViewAdapter#0" expanded="false" />
-            <element signature="method#refreshAdapterData#0;class#RecyclerViewAdapter#0" expanded="false" />
-            <element signature="method#onCreateViewHolder#0;class#RecyclerViewAdapter#0" expanded="false" />
-            <element signature="e#2920#2921#0" expanded="true" />
-            <element signature="e#2982#2983#0" expanded="true" />
+            <element signature="e#1699#1727#0" expanded="true" />
+            <element signature="e#2092#2124#0" expanded="true" />
+            <element signature="e#2223#2237#0" expanded="true" />
+            <element signature="e#2550#2582#0" expanded="true" />
+            <element signature="e#2689#2712#0" expanded="true" />
+            <element signature="e#2846#3092#0" expanded="false" />
+            <element signature="e#3753#3778#0" expanded="true" />
+            <element signature="e#4069#4101#0" expanded="true" />
+            <element signature="e#4421#4440#0" expanded="true" />
+            <element signature="e#4822#4839#0" expanded="true" />
+            <element signature="e#5581#5610#0" expanded="true" />
+            <element signature="e#5927#5964#0" expanded="true" />
+            <element signature="e#6642#6659#0" expanded="true" />
+            <element signature="e#7041#7067#0" expanded="true" />
+            <element signature="e#7489#7517#0" expanded="true" />
+            <element signature="e#7834#7869#0" expanded="true" />
+            <element signature="e#8186#8233#0" expanded="true" />
+            <element signature="e#8556#8595#0" expanded="true" />
+            <element signature="e#9241#9280#0" expanded="true" />
+            <element signature="e#9597#9648#0" expanded="true" />
+            <element signature="e#9971#10014#0" expanded="true" />
+            <element signature="e#10660#10696#0" expanded="true" />
+            <element signature="e#11013#11061#0" expanded="true" />
+            <element signature="e#11384#11424#0" expanded="true" />
+            <element signature="e#12071#12112#0" expanded="true" />
+            <element signature="e#12429#12482#0" expanded="true" />
+            <element signature="e#12805#12850#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.266666">
+          <caret line="66" column="35" selection-start-line="66" selection-start-column="17" selection-end-line="66" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22137405">
+          <caret line="42" column="37" selection-start-line="42" selection-start-column="37" selection-end-line="42" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>

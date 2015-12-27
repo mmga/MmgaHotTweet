@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.kogitune.activity_transition.ActivityTransitionLauncher;
+import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.mmga.mmgahottweet.R;
 import com.mmga.mmgahottweet.data.Constant;
 import com.mmga.mmgahottweet.data.LoadDataTransFormer;
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
     SimpleDraweeView myAvatar;
+    BottomSheetLayout bottomSheet;
 
     Toolbar toolbar;
     //    Location mLocation;
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void init() {
+        bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -303,8 +306,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 openSearchDialog();
                 break;
             case (R.id.my_avatar):
-                Intent intent = new Intent(MainActivity.this, AccountActivity.class);
-                ActivityTransitionLauncher.with(MainActivity.this).from(myAvatar).launch(intent);
+                mDrawerLayout.closeDrawer(Gravity.LEFT);
+//                bottomSheet.showWithSheetView(LayoutInflater.
+//                        from(MainActivity.this).inflate(R.layout.my_resume, bottomSheet, false));
+                break;
         }
     }
 

@@ -13,6 +13,9 @@ public class Status {
     @SerializedName("user")
     private User user;
 
+    @SerializedName("retweeted_status")
+    private ReTweet reTweet;
+
     @SerializedName("entities")
     private Entities entities;
 
@@ -57,5 +60,13 @@ public class Status {
 
     public void setLastId(String lastId) {
         this.lastId = lastId;
+    }
+
+    public ReTweet getReTweet() {
+        return reTweet;
+    }
+
+    public void setReTweet(ReTweet reTweet) {
+        this.reTweet = reTweet;
     }
 }

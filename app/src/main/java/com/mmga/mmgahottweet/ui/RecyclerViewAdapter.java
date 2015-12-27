@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -51,14 +52,37 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+
+
         Status status = itemList.get(position);
-        holder.userName.setText(status.getUser().getName());
-        holder.screenName.setText(String.format("/@%s", status.getUser().getScreenName()));
-        holder.content.setText(status.getText());
+
+        if (status.getReTweet() != null) {
+            //转推者信息
+            holder.rtLayout.setVisibility(View.VISIBLE);
+            uri = Uri.parse(status.getUser().getProfileImageUrl());
+            holder.rtAvatar.setImageURI(uri);
+            holder.rtUser.setText("转推者: " + status.getUser().getScreenName());
+
+            //原推内容
+            holder.userName.setText(status.getReTweet().getRtUser().getUserName());
+            holder.screenName.setText(String.format("/@%s", status.getReTweet().getRtUser().getScreenName()));
+            holder.content.setText(status.getReTweet().getRtText());
+            uri = Uri.parse(status.getReTweet().getRtUser().getProfileImageUrl());
+            holder.avatar.setImageURI(uri);
+
+        } else {
+            holder.userName.setText(status.getUser().getName());
+            holder.screenName.setText(String.format("/@%s", status.getUser().getScreenName()));
+            holder.content.setText(status.getText());
+            uri = Uri.parse(status.getUser().getProfileImageUrl());
+            holder.avatar.setImageURI(uri);
+        }
+
+
         String time = DateUtil.parseDate(status.getCreatedAt());
         holder.createTime.setText(time);
-        uri = Uri.parse(itemList.get(position).getUser().getProfileImageUrl());
-        holder.avatar.setImageURI(uri);
+
+
     }
 
     @Override
@@ -78,6 +102,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView screenName;
         TextView content;
         SimpleDraweeView avatar;
+        LinearLayout rtLayout;
+        SimpleDraweeView rtAvatar;
+        TextView rtUser;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -87,6 +115,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             createTime = (TextView) itemView.findViewById(R.id.create_time);
             content = (TextView) itemView.findViewById(R.id.content);
             avatar = (SimpleDraweeView) itemView.findViewById(R.id.avatar);
+            rtLayout = (LinearLayout) itemView.findViewById(R.id.rt_layout);
+            rtAvatar = (SimpleDraweeView) itemView.findViewById(R.id.rt_avatar);
+            rtUser = (TextView) itemView.findViewById(R.id.rt_user);
+
         }
     }
 

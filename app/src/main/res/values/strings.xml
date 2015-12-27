@@ -5,22 +5,29 @@
     <string name="search_hint">搜啥咧</string>
     <string name="search_title">搜索</string>
     <string name="search_btn">开搜</string>
+
+    <string name="geo_setting">搜索附近</string>
+    <string name="language_setting">语言过滤</string>
+    <string name="result_type">内容类型</string>
+    <string name="popular_text">热门</string>
+    <string name="recent_text">最新</string>
+
+    <string name="nav_header_my_name">卞云鹏</string>
+    <string name="nav_header_description">点击查看简历</string>
+    <string name="sub_items_title">系统</string>
     <string name="nav_home">主页</string>
     <string name="nav_messages">私信</string>
     <string name="nav_friends">好友</string>
     <string name="nav_notification">通知</string>
-    <string name="geo_setting">搜索附近</string>
-    <string name="language_setting">语言过滤</string>
-    <string name="nav_header_my_name">卞云鹏</string>
-    <string name="nav_header_description">点击查看/编辑</string>
-    <string name="sub_items_title">系统</string>
-    <string name="result_type">内容类型</string>
-    <string name="popular_text">热门</string>
-    <string name="recent_text">最新</string>
+
+
     <string name="error_timeout">网络连接超时</string>
     <string name="error_no_more_data">没有更多了内容了</string>
     <string name="error_data_not_found">没有搜索结果</string>
     <string name="error_not_get_token">同学，要记得科学上网啊</string>
+
+
+
     <string name="orz">╮(╯▽╰)╭</string>
     <string name="lorem">Lorem ipsum dolor sit amet, causae graecis scriptorem ea his,
         omnes ceteros ne mel. Nobis complectitur definitiones ad vis, eam at fabulas

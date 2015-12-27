@@ -22,6 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -74,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String mResultType;
     private boolean mNeedGeo;
     private String mGeoCode;
+    private LinearLayout internetError;
+    private TextView retryButton;
 
 
     @Override
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void init() {
         bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
+        internetError = (LinearLayout) findViewById(R.id.internet_error_layout);
+        retryButton = (TextView) findViewById(R.id.retry);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -138,8 +144,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupDrawerContent(final NavigationView mNavigationView) {
 
+        TextView myResume = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.my_resume);
+        myResume.setOnClickListener(this);
         myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
-        myAvatar.setOnClickListener(this);
         Uri uri = Uri.parse("res://com.mmga.mmgahottweet/" + R.drawable.my_avatar);
         myAvatar.setImageURI(uri);
         mNavigationView.setNavigationItemSelectedListener(
@@ -286,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onError(Throwable e) {
                         Log.d("mmga", "getTokenError : " + e.getMessage());
                         mSwipeLayout.setRefreshing(false);
+                        internetError.setVisibility(View.VISIBLE);
+                        retryButton.setOnClickListener(MainActivity.this);
                         ToastUtil.showLong(getString(R.string.error_not_get_token));
                     }
 
@@ -301,15 +310,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.fab):
-                fab.setClickable(false);//防连点
                 fab.hide();
                 openSearchDialog();
                 break;
-            case (R.id.my_avatar):
+            case (R.id.my_resume):
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
 //                bottomSheet.showWithSheetView(LayoutInflater.
 //                        from(MainActivity.this).inflate(R.layout.my_resume, bottomSheet, false));
                 break;
+            case (R.id.retry):
+                internetError.setVisibility(View.GONE);
+                getInitToken();
+                mSwipeLayout.setRefreshing(true);
         }
     }
 
@@ -368,7 +380,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         fab.show();
-                        fab.setClickable(true);
                     }
                 })
                 .show();

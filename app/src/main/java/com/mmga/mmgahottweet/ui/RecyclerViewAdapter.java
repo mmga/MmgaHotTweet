@@ -61,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.rtLayout.setVisibility(View.VISIBLE);
             uri = Uri.parse(status.getUser().getProfileImageUrl());
             holder.rtAvatar.setImageURI(uri);
-            holder.rtUser.setText("转推者: " + status.getUser().getScreenName());
+            holder.rtUser.setText(String.format("转推者: @%s", status.getUser().getScreenName()));
 
             //原推内容
             holder.userName.setText(status.getReTweet().getRtUser().getUserName());
@@ -77,7 +77,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             uri = Uri.parse(status.getUser().getProfileImageUrl());
             holder.avatar.setImageURI(uri);
         }
-
 
         String time = DateUtil.parseDate(status.getCreatedAt());
         holder.createTime.setText(time);

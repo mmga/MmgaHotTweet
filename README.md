@@ -10,7 +10,7 @@
 ![](http://7xog6v.com1.z0.glb.clouddn.com/image%2Fblog%2Ftwihuisou%20montage.png)
 
 ##APK
-[http://fir.im/TwiHuisou](http://fir.im/TwiHuisou) 访问密码0227
+[apk](https://github.com/mmga/MmgaHotTweet/blob/master/apk/TwiHuiSou.apk) 
 
 ##收获
 使用Retrofit2+RxJava+RxAndroid获取数据<br>

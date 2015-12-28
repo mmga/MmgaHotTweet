@@ -1,3 +1,5 @@
+
+![](http://7xog6v.com1.z0.glb.clouddn.com/image%2Fblog%2Ftwihuisou%20icon.png)
 ##介绍
 一个练手的项目<br>
 能够根据用户输入热词搜索 Twitter 上相关内容<br>

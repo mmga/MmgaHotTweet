@@ -3,7 +3,7 @@ package com.mmga.mmgahottweet.utils;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-import com.mmga.mmgahottweet.base.MyApplication;
+import com.mmga.mmgahottweet.MyApplication;
 
 public class DensityUtil {
 

@@ -5,7 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="recylist_divider">2dp</dimen>
     <dimen name="setting_divider">1dp</dimen>
-    <dimen name="edittext_padding_vertical">16dp</dimen>
     <dimen name="edittext_text_size">16sp</dimen>
     <dimen name="dialog_padding">24dp</dimen>
     <dimen name="about_header_height">240dp</dimen>

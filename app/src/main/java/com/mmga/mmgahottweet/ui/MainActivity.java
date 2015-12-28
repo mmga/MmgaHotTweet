@@ -2,6 +2,7 @@ package com.mmga.mmgahottweet.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -29,17 +30,17 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.mmga.mmgahottweet.Constant;
 import com.mmga.mmgahottweet.R;
-import com.mmga.mmgahottweet.data.Constant;
-import com.mmga.mmgahottweet.data.LoadDataTransFormer;
 import com.mmga.mmgahottweet.data.SearchFactory;
 import com.mmga.mmgahottweet.data.ServiceGenerator;
 import com.mmga.mmgahottweet.data.TweetApi;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.data.model.Token;
 import com.mmga.mmgahottweet.data.model.Twitter;
-import com.mmga.mmgahottweet.utils.Geo;
-import com.mmga.mmgahottweet.utils.LogUtil;
+import com.mmga.mmgahottweet.data.transformer.LoadDataTransFormer;
+import com.mmga.mmgahottweet.ui.transformer.InsetViewTransformer;
+import com.mmga.mmgahottweet.utils.GeoUtil;
 import com.mmga.mmgahottweet.utils.SharedPrefsUtil;
 import com.mmga.mmgahottweet.utils.StatusBarCompat;
 import com.mmga.mmgahottweet.utils.ToastUtil;
@@ -57,32 +58,30 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1;
-    RecyclerViewAdapter mAdapter;
-    LinearLayoutManager mLayoutManager;
-    SwipeRefreshLayout mSwipeLayout;
+    private MainActivityAdapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    private SwipeRefreshLayout mSwipeLayout;
     private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    SimpleDraweeView myAvatar;
-    BottomSheetLayout bottomSheet;
+    private BottomSheetLayout bottomSheet;
+    private Toolbar toolbar;
+    private RecyclerView mRecyclerView;
+    private LinearLayout internetError;
+    private TextView retryButton;
+    private FloatingActionButton fab;
+    private Observable<Twitter> observable;
+    private View sheetView;
 
-    Toolbar toolbar;
-    //    Location mLocation;
-    RecyclerView mRecyclerView;
-    Observable<Twitter> observable;
-    FloatingActionButton fab;
+
     private String mCurrentSearchText;
     private String maxId;
     private int mLangPos;
-    boolean isLoadingMore;
+    private boolean isLoadingMore;
     private String mResultType;
     private boolean mNeedGeo;
     private String mGeoCode;
-    private LinearLayout internetError;
-    private TextView retryButton;
 
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
@@ -90,21 +89,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
         ToastUtil.register(this);
 
-        init();
-
         initPrefs();//读取初始设置
-
+        init();
         getInitToken();
 
     }
 
     private void init() {
-        bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
-        internetError = (LinearLayout) findViewById(R.id.internet_error_layout);
-        retryButton = (TextView) findViewById(R.id.retry);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         mSwipeLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
         mSwipeLayout.setEnabled(false);
@@ -136,18 +129,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new RecyclerViewAdapter();
+        mAdapter = new MainActivityAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(scrollListener);
 
-
+        bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
+        internetError = (LinearLayout) findViewById(R.id.internet_error_layout);
+        retryButton = (TextView) findViewById(R.id.retry);
+        sheetView = LayoutInflater.from(MainActivity.this).
+                inflate(R.layout.my_resume, bottomSheet, false);
+        sheetView.findViewById(R.id.my_connection).setOnClickListener(this);
+        sheetView.findViewById(R.id.my_github).setOnClickListener(this);
+        sheetView.findViewById(R.id.litedo_url).setOnClickListener(this);
+        sheetView.findViewById(R.id.cloudcover_url).setOnClickListener(this);
+        sheetView.findViewById(R.id.upclock_url).setOnClickListener(this);
+        sheetView.findViewById(R.id.metroloading_url).setOnClickListener(this);
     }
 
     private void setupDrawerContent(final NavigationView mNavigationView) {
 
         TextView myResume = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.my_resume);
         myResume.setOnClickListener(this);
-        myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
+        SimpleDraweeView myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
         Uri uri = Uri.parse("res://com.mmga.mmgahottweet/" + R.drawable.my_avatar);
         myAvatar.setImageURI(uri);
         mNavigationView.setNavigationItemSelectedListener(
@@ -182,12 +185,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initPrefs() {
-        mGeoCode = Geo.getGeocode(this);
+        mGeoCode = GeoUtil.getGeocode(this);
         mCurrentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
         mLangPos = SharedPrefsUtil.getValue(this, "config", "langPos", Constant.LANG_DEFAULT);
         mResultType = SharedPrefsUtil.getValue(this, "config", "resultType", Constant.TYPE_MIX);
         mNeedGeo = SharedPrefsUtil.getValue(this, "config", "needGeo", false);
-        LogUtil.d("initPrefs : geoCode =" + mGeoCode);
     }
 
 
@@ -265,11 +267,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //lastId是最后一个的id，之后请求的最大id要比它小
                         maxId = String.valueOf(Long.valueOf(lastId) - 1);
                         mAdapter.addAdapterData(status);
-                        LogUtil.d(mAdapter.getItemCount());
                     }
                 });
     }
-
 
     private void getInitToken() {
         TweetApi tokenService = ServiceGenerator.createService(TweetApi.class);
@@ -304,8 +304,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         SearchFactory.prepareToSearch(token.getAccessToken());
                     }
                 });
-
     }
+
 
     @Override
     public void onClick(View v) {
@@ -316,20 +316,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.my_resume):
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
-                bottomSheet.showWithSheetView(LayoutInflater.
-                        from(MainActivity.this).inflate(R.layout.my_resume, bottomSheet, false),
-                        new InsetViewTransformer());
+                bottomSheet.postDelayed(new Runnable() { //设一小段延时，要不屏幕短时间内变亮又变暗，晃瞎眼
+                    @Override
+                    public void run() {
+                        bottomSheet.showWithSheetView(sheetView, new InsetViewTransformer());
+                    }
+                }, 200);
                 break;
             case (R.id.retry):
                 internetError.setVisibility(View.GONE);
                 getInitToken();
                 mSwipeLayout.setRefreshing(true);
+                break;
+            case R.id.my_connection:
+                makeACall();
+                break;
+            case R.id.my_github:
+                openGithub("");
+                break;
+            case R.id.litedo_url:
+                openGithub("Litedo");
+                break;
+            case R.id.cloudcover_url:
+                openGithub("cloudcover");
+                break;
+            case R.id.upclock_url:
+                openGithub("Upclock");
+                break;
+            case R.id.metroloading_url:
+                openGithub("MetroLoading");
+                break;
         }
     }
 
 
+
+
     //监听RecyclerView滑动事件，用来判断是否滑动到底部，用来加载更多信息
-    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+    private final RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -389,17 +413,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
-        SharedPrefsUtil.putValue(MainActivity.this, "config", "lastSearchedText", mCurrentSearchText);
-        SharedPrefsUtil.putValue(MainActivity.this, "config", "langPos", mLangPos);
-        SharedPrefsUtil.putValue(MainActivity.this, "config", "resultType", mResultType);
-        SharedPrefsUtil.putValue(MainActivity.this, "config", "needGeo", mNeedGeo);
+        SharedPreferences.Editor editor = getSharedPreferences("config", MODE_PRIVATE).edit();
+        editor.putString("lastSearchedText", mCurrentSearchText);
+        editor.putString("resultType", mResultType);
+        editor.putInt("langPos", mLangPos);
+        editor.putBoolean("needGeo", mNeedGeo);
+        editor.apply();
     }
 
     @Override
@@ -431,14 +452,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private String urlEncodeString(String input) {
-        String encodedStr = "";
-        try {
-            encodedStr = URLEncoder.encode(input, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return encodedStr;
+    private void openGithub(String project) {
+        String url = "http://www.github.com/mmga/" + project;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);
+    }
+
+    private void makeACall() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + "18641199236");
+        intent.setData(data);
+        startActivity(intent);
     }
 
     @Override
@@ -448,8 +473,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mLangPos = data.getIntExtra("langPos", mLangPos);
             mResultType = data.getStringExtra("resultType");
             mNeedGeo = data.getBooleanExtra("needGeo", mNeedGeo);
-            LogUtil.d("mNeedGeo = " + data.getBooleanExtra("needGeo", mNeedGeo));
         }
+    }
+
+    private String urlEncodeString(String input) {
+        String encodedStr = "";
+        try {
+            encodedStr = URLEncoder.encode(input, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return encodedStr;
     }
 
 }

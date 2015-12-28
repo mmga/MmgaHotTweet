@@ -1,4 +1,4 @@
-package com.mmga.mmgahottweet.data;
+package com.mmga.mmgahottweet.data.transformer;
 
 import com.mmga.mmgahottweet.data.model.Twitter;
 
@@ -12,7 +12,7 @@ public class LoadDataTransFormer implements Observable.Transformer<Twitter, Twit
     @Override
     public Observable<Twitter> call(Observable<Twitter> twitterObservable) {
         return twitterObservable
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }

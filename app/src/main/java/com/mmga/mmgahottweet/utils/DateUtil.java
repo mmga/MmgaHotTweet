@@ -16,7 +16,7 @@ public class DateUtil {
     private static final long YEAR = 365 * DAY;
 
 
-    static Date date;
+    private static Date date;
 
     public static String parseDate(String time) {
         SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH);

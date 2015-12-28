@@ -1,6 +1,7 @@
 package com.mmga.mmgahottweet.data;
 
 
+import com.mmga.mmgahottweet.Constant;
 import com.mmga.mmgahottweet.data.model.Twitter;
 import com.mmga.mmgahottweet.utils.LangCodeUtil;
 import com.mmga.mmgahottweet.utils.LogUtil;
@@ -9,7 +10,7 @@ import rx.Observable;
 
 public class SearchFactory {
 
-    static TweetApi twitterService;
+    private static TweetApi twitterService;
 
     public static void prepareToSearch(String accessToken) {
         twitterService = ServiceGenerator.createBearerTokenService(TweetApi.class, accessToken);

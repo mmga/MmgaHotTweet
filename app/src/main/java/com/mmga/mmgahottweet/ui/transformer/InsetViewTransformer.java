@@ -1,4 +1,4 @@
-package com.mmga.mmgahottweet.ui;
+package com.mmga.mmgahottweet.ui.transformer;
 
 
 import android.view.View;
@@ -27,13 +27,13 @@ public class InsetViewTransformer extends BaseViewTransformer {
         callMe.setTranslationY(fraction * distance);
         followMe.setTranslationY(fraction * distance * 2);
 
-        if (translation == 0 || translation == parent.getHeight()) {
-            parent.setBackgroundColor(0);
-            ensureLayout(view, View.LAYER_TYPE_NONE);
-        } else {
-            parent.setBackgroundColor(view.getResources().getColor(R.color.colorBackground));
-            ensureLayout(view, View.LAYER_TYPE_HARDWARE);
-        }
+//        if (translation == 0 || translation == parent.getHeight()) {
+//            parent.setBackgroundColor(0);
+//            ensureLayout(view, View.LAYER_TYPE_NONE);
+//        } else {
+//            parent.setBackgroundColor(view.getResources().getColor(R.color.colorBackground));
+//            ensureLayout(view, View.LAYER_TYPE_HARDWARE);
+//        }
 
 
     }

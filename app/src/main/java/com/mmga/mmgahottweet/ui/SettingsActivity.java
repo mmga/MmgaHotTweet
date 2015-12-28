@@ -12,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.mmga.mmgahottweet.R;
-import com.mmga.mmgahottweet.data.Constant;
+import com.mmga.mmgahottweet.Constant;
 import com.mmga.mmgahottweet.utils.LogUtil;
 import com.mmga.mmgahottweet.utils.StatusBarCompat;
 import com.mmga.mmgahottweet.utils.ToastUtil;
@@ -20,14 +20,15 @@ import com.mmga.mmgahottweet.utils.ToastUtil;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
-    Spinner langSpinner;
-    Toolbar toolbar;
-    String[] lang;
-    String resultType;
-    int langPos;
-    CheckBox recentCheckBox, popularCheckBox,geoCheckBox;
+    private Spinner langSpinner;
+    private Toolbar toolbar;
+    private String[] lang;
+    private String resultType;
+    private int langPos;
+    private CheckBox recentCheckBox;
+    private CheckBox popularCheckBox;
+    private CheckBox geoCheckBox;
 
-    private ArrayAdapter<String> langAdapter;
     private boolean needGeo;
 
 
@@ -73,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
     private void setupSpinner() {
         lang = getResources().getStringArray(R.array.languages);
-        langAdapter = new ArrayAdapter<>(this, R.layout.my_spinner_text, lang);
+        ArrayAdapter<String> langAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_text, lang);
         langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         langSpinner.setAdapter(langAdapter);
         langSpinner.setOnItemSelectedListener(this);

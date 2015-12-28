@@ -1,18 +1,16 @@
 package com.mmga.mmgahottweet.utils;
 
-import com.mmga.mmgahottweet.data.Constant;
+import com.mmga.mmgahottweet.Constant;
 
-/**
- * Created by mmga on 2015/12/25.
- */
+
 public class LangCodeUtil {
-    public static String LANG_DEFAULT_CODE= "default";
-    public static String LANG_CHINESE_CODE= "zh";
-    public static String LANG_ENGLISH_CODE= "en";
-    public static String LANG_GERMAN_CODE= "de";
-    public static String LANG_JAPANESE_CODE = "ja";
-    public static String LANG_FRENCH_CODE= "fr";
-    public static String LANG_KOREAN_CODE= "ko";
+    static final String LANG_DEFAULT_CODE= "default";
+    static final String LANG_CHINESE_CODE= "zh";
+    static final String LANG_ENGLISH_CODE= "en";
+    static final String LANG_GERMAN_CODE= "de";
+    static final String LANG_JAPANESE_CODE = "ja";
+    static final String LANG_FRENCH_CODE= "fr";
+    static final String LANG_KOREAN_CODE= "ko";
 
 
     public static String getLangCode(int langPos) {

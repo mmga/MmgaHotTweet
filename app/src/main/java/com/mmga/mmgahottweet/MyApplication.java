@@ -1,4 +1,4 @@
-package com.mmga.mmgahottweet.base;
+package com.mmga.mmgahottweet;
 
 
 import android.app.Application;

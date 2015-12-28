@@ -8,7 +8,7 @@ import java.util.List;
 public class Twitter {
 
     @SerializedName("statuses")
-    private List<Status> statuses = new ArrayList<Status>();
+    private List<Status> statuses = new ArrayList<>();
 
     @SerializedName("search_metadata")
     private SearchMetadata searchMetadata;

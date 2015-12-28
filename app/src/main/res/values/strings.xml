@@ -6,7 +6,10 @@
     <string name="search_title">搜索</string>
     <string name="search_btn">开搜</string>
 
+
+    <!--设置菜单-->
     <string name="geo_setting">搜索附近</string>
+    <string name="geo_setting_open">开启</string>
     <string name="language_setting">语言过滤</string>
     <string name="result_type">内容类型</string>
     <string name="popular_text">热门</string>
@@ -22,6 +25,8 @@
     <string name="nav_notification">通知</string>
 
     <!--错误提示-->
+    <string name="error_text">网络错误</string>
+    <string name="error_retry">重试</string>
     <string name="error_timeout">网络连接超时</string>
     <string name="error_no_more_data">没有更多了内容了</string>
     <string name="error_data_not_found">没有搜索结果</string>
@@ -45,7 +50,6 @@
     <string name="call">call</string>
 
     <string name="education">教育背景</string>
-    <string name="education_period">2008–2012</string>
     <string name="college">武汉大学 2008–2012\n电气工程与自动化\n本科</string>
 
     <string name="personal_experience">个人经历</string>
@@ -62,7 +66,7 @@
     </string>
 
 
-    <string name="project_experience">项目经验\n(show you my code)</string>
+    <string name="project_experience">项目经验\n(show you the code)</string>
     <string name="project_experience_litedo">Litedo</string>
     <string name="project_experience_litedo_description">[便签]
         \n使用RecyclerView承载和展示数据，通过ItemTouchHelper实现滑动删除和拖动调整位置的手势。
@@ -86,7 +90,7 @@
         \n创建Service时使用了前台服务，在通知栏提示用户闹钟状态，同时提高Service的优先级。
         \n多主题颜色的切换
         \n已上线豌豆荚和应用宝</string>
-    <string name="project_experience_upclock_url">https://https://github.com/mmga/UpClock</string>
+    <string name="project_experience_upclock_url">https://github.com/mmga/UpClock</string>
 
     <string name="project_experience_metroloading">MetroLoading</string>
     <string name="project_experience_metroloading_description">[loading动画]
@@ -94,7 +98,7 @@
         \n自定义view，使用ValueAnimator实现动画
         \n发布在jCenter上
         </string>
-    <string name="project_experience_metroloading_url">https://https://github.com/mmga/MetroLoading</string>
+    <string name="project_experience_metroloading_url">https://github.com/mmga/MetroLoading</string>
 
 
 </resources>

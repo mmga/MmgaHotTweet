@@ -4,7 +4,7 @@
     android:id="@+id/my_resume_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sheet_bg"
+    android:background="@drawable/bg_sheet"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:scaleType="centerInside"
         android:src="@mipmap/ic_chevron_up_white_24dp" />
 
     <LinearLayout
@@ -51,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="@dimen/sheet_parallax_vertical"
+                android:background="@drawable/bg_text_transparent"
                 android:drawableLeft="@mipmap/ic_phone_grey600_18dp"
                 android:text="@string/call"
                 android:textColor="@color/text_content"
@@ -61,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/sheet_parallax_vertical"
+                android:background="@drawable/bg_text_transparent"
                 android:drawableLeft="@mipmap/ic_github_circle_grey600_18dp"
                 android:text="@string/github_follow"
                 android:textColor="@color/text_content"
@@ -108,8 +109,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/education"
                         android:background="@color/resume_title"
+                        android:text="@string/education"
                         android:textAppearance="@style/resume_title" />
 
                     <TextView
@@ -119,12 +120,12 @@
                         android:text="@string/college"
                         android:textAppearance="@style/resume_description" />
 
-                    <View android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/colorBackground"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        />
+                        android:background="@color/colorBackground" />
                     <!--个人经历-->
                     <TextView
                         android:layout_width="match_parent"
@@ -141,20 +142,20 @@
                         android:text="@string/personal_experience_content"
                         android:textAppearance="@style/resume_description" />
 
-                    <View android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/colorBackground"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        />
+                        android:background="@color/colorBackground" />
 
                     <!--专业技能-->
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@string/ability"
                         android:background="@color/resume_title"
+                        android:text="@string/ability"
                         android:textAppearance="@style/resume_title" />
 
                     <TextView
@@ -163,7 +164,6 @@
                         android:layout_marginTop="4dp"
                         android:text="@string/ability_content1"
                         android:textAppearance="@style/resume_description" />
-
 
 
                     <!--项目经验-->
@@ -190,18 +190,21 @@
                         android:textAppearance="@style/resume_description" />
 
                     <TextView
+                        android:id="@+id/litedo_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_text_transparent"
                         android:text="@string/project_experience_litedo_url"
-                        android:textAppearance="@style/resume_description" />
+                        android:textAppearance="@style/resume_description"
+                        android:textColor="@color/colorPrimary" />
 
-                    <View android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/colorBackground"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        />
+                        android:background="@color/colorBackground" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -218,18 +221,21 @@
                         android:textAppearance="@style/resume_description" />
 
                     <TextView
+                        android:id="@+id/cloudcover_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_text_transparent"
                         android:text="@string/project_experience_cloudcover_url"
-                        android:textAppearance="@style/resume_description" />
+                        android:textAppearance="@style/resume_description"
+                        android:textColor="@color/colorPrimary" />
 
-                    <View android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/colorBackground"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        />
+                        android:background="@color/colorBackground" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -246,19 +252,22 @@
                         android:textAppearance="@style/resume_description" />
 
                     <TextView
+                        android:id="@+id/upclock_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_text_transparent"
                         android:text="@string/project_experience_upclock_url"
-                        android:textAppearance="@style/resume_description" />
+                        android:textAppearance="@style/resume_description"
+                        android:textColor="@color/colorPrimary" />
 
 
-                    <View android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/colorBackground"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        />
+                        android:background="@color/colorBackground" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -275,18 +284,21 @@
                         android:textAppearance="@style/resume_description" />
 
                     <TextView
+                        android:id="@+id/metroloading_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_text_transparent"
                         android:text="@string/project_experience_metroloading_url"
-                        android:textAppearance="@style/resume_description" />
+                        android:textAppearance="@style/resume_description"
+                        android:textColor="@color/colorPrimary" />
 
-                    <View android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="wrap_content"
                         android:layout_height="1dp"
-                        android:background="@color/colorBackground"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        />
+                        android:background="@color/colorBackground" />
 
                 </LinearLayout>
 

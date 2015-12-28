@@ -1,8 +1,6 @@
-package com.mmga.mmgahottweet.data;
+package com.mmga.mmgahottweet;
 
-/**
- * Created by mmga on 2015/12/24.
- */
+
 public class Constant {
     public static final String DEFAULT_CONTENT = "android";
     public static final int DEFAULT_COUNT = 20;

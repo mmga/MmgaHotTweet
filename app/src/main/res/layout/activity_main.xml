@@ -38,7 +38,7 @@
 
                 </android.support.design.widget.AppBarLayout>
 
-                <include layout="@layout/list" />
+                <include layout="@layout/common_list" />
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                         android:id="@+id/internet_error_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="网络错误" />
+                        android:text="@string/error_text" />
 
                     <TextView
                         android:textColor="@color/colorPrimaryDark"
@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="重试" />
+                        android:text="@string/error_retry" />
 
                 </LinearLayout>
 

@@ -8,11 +8,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 
-import com.mmga.mmgahottweet.data.Constant;
+import com.mmga.mmgahottweet.Constant;
 
-public class Geo {
-    static LocationManager locationManager;
-    static String provider = LocationManager.NETWORK_PROVIDER;
+public class GeoUtil {
+    private static LocationManager locationManager;
+    private static final String provider = LocationManager.NETWORK_PROVIDER;
 
     public static String getGeocode(Context context) {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

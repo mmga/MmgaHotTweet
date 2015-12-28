@@ -10,25 +10,20 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mmga.mmgahottweet.R;
-import com.mmga.mmgahottweet.data.Constant;
+import com.mmga.mmgahottweet.Constant;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyViewHolder> {
 
-    List<Status> itemList = new ArrayList<>();
-    Uri uri;
+    private List<Status> itemList = new ArrayList<>();
+    private Uri uri;
 
-    public RecyclerViewAdapter() {
+    public MainActivityAdapter() {
 
-    }
-
-    public void setAdapterData(List<Status> list) {
-        this.itemList = list;
-        notifyDataSetChanged();
     }
 
     public void addAdapterData(List<Status> statusList) {
@@ -46,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.list_item, parent, false);
+                R.layout.main_list_item, parent, false);
         return new MyViewHolder(view);
     }
 

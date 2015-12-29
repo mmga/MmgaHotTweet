@@ -40,14 +40,13 @@ import com.mmga.mmgahottweet.data.model.Token;
 import com.mmga.mmgahottweet.data.model.Twitter;
 import com.mmga.mmgahottweet.data.transformer.LoadDataTransFormer;
 import com.mmga.mmgahottweet.ui.transformer.InsetViewTransformer;
+import com.mmga.mmgahottweet.utils.EncodeUtil;
 import com.mmga.mmgahottweet.utils.GeoUtil;
 import com.mmga.mmgahottweet.utils.SharedPrefsUtil;
 import com.mmga.mmgahottweet.utils.StatusBarCompat;
 import com.mmga.mmgahottweet.utils.ToastUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import rx.Observable;
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private BottomSheetLayout bottomSheet;
     private Toolbar toolbar;
-    private RecyclerView mRecyclerView;
     private LinearLayout internetError;
     private TextView retryButton;
     private FloatingActionButton fab;
@@ -89,13 +87,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
         ToastUtil.register(this);
 
-        initPrefs();//读取初始设置
-        init();
-        getInitToken();
+        initConfigs();//读取初始设置
+        initViews();
+        authAndLoadData();
 
     }
 
-    private void init() {
+    private void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupDrawerContent(mNavigationView);
 
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MainActivityAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -172,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 ToastUtil.showShort(getString(R.string.orz));
                                 break;
                             case R.id.nav_settings:
-                                openSettingsActivity();
+                                startSettingsActivity();
                             default:
                                 break;
 
@@ -184,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         );
     }
 
-    private void initPrefs() {
+    private void initConfigs() {
         mGeoCode = GeoUtil.getGeocode(this);
         mCurrentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
         mLangPos = SharedPrefsUtil.getValue(this, "config", "langPos", Constant.LANG_DEFAULT);
@@ -193,9 +191,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
+
     private void loadData(String content) {
         String geoString = mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO;
-        String encodedString = urlEncodeString(content);
+        String encodedString = EncodeUtil.urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
         observable = SearchFactory.search(encodedString, mLangPos, mResultType, geoString);
         observable.compose(loadDataTransFormer)
@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadMoreData(String content) {
         String geoString = mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO;
-        String encodedString = urlEncodeString(content);
+        String encodedString = EncodeUtil.urlEncodeString(content);
         Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
         observable = SearchFactory.search(encodedString, maxId, mLangPos, mResultType, geoString);
         observable.compose(loadDataTransFormer)
@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-    private void getInitToken() {
+    private void authAndLoadData() {
         TweetApi tokenService = ServiceGenerator.createService(TweetApi.class);
         tokenService.getToken("client_credentials")
                 .subscribeOn(Schedulers.io())
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onCompleted() {
                         mSwipeLayout.setEnabled(true);//正确获取token之后才可以下拉刷新
-                        fab.show();//获取token之后才能搜索
+                        fab.show();//获取token之后才显示搜索按钮
                         loadData(mCurrentSearchText);
                     }
 
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case (R.id.fab):
                 fab.hide();
-                openSearchDialog();
+                showSearchDialog();
                 break;
             case (R.id.my_resume):
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -325,26 +325,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.retry):
                 internetError.setVisibility(View.GONE);
-                getInitToken();
+                authAndLoadData();
                 mSwipeLayout.setRefreshing(true);
                 break;
             case R.id.my_connection:
                 makeACall();
                 break;
             case R.id.my_github:
-                openGithub("");
+                linkToGithub("");
                 break;
             case R.id.litedo_url:
-                openGithub("Litedo");
+                linkToGithub("Litedo");
                 break;
             case R.id.cloudcover_url:
-                openGithub("cloudcover");
+                linkToGithub("cloudcover");
                 break;
             case R.id.upclock_url:
-                openGithub("Upclock");
+                linkToGithub("Upclock");
                 break;
             case R.id.metroloading_url:
-                openGithub("MetroLoading");
+                linkToGithub("MetroLoading");
                 break;
         }
     }
@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
 
-    private void openSearchDialog() {
+    private void showSearchDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         FrameLayout searchView = (FrameLayout) getLayoutInflater().inflate(R.layout.search_dialog, null);
         final MaterialEditText editText = (MaterialEditText) searchView.findViewById(R.id.edit_text);
@@ -433,7 +433,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                openSettingsActivity();
+                startSettingsActivity();
                 return true;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -443,7 +443,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void openSettingsActivity() {
+    private void startSettingsActivity() {
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         i.putExtra("langPos", mLangPos);
         i.putExtra("resultType", mResultType);
@@ -452,7 +452,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void openGithub(String project) {
+    private void linkToGithub(String project) {
         String url = "http://www.github.com/mmga/" + project;
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
@@ -476,14 +476,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private String urlEncodeString(String input) {
-        String encodedStr = "";
-        try {
-            encodedStr = URLEncoder.encode(input, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return encodedStr;
-    }
 
 }

@@ -21,8 +21,6 @@ import com.mmga.mmgahottweet.utils.ToastUtil;
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private Spinner langSpinner;
-    private Toolbar toolbar;
-    private String[] lang;
     private String resultType;
     private int langPos;
     private CheckBox recentCheckBox;
@@ -49,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         needGeo = intent.getBooleanExtra("needGeo", false);
         LogUtil.d("getBooleanExtra = " + needGeo);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.mipmap.ic_arrow_left_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -73,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
 
     private void setupSpinner() {
-        lang = getResources().getStringArray(R.array.languages);
+        String[] lang = getResources().getStringArray(R.array.languages);
         ArrayAdapter<String> langAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_text, lang);
         langAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         langSpinner.setAdapter(langAdapter);

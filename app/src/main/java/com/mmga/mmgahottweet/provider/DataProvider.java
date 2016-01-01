@@ -7,7 +7,6 @@ import com.mmga.mmgahottweet.data.TweetApi;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.data.model.Token;
 import com.mmga.mmgahottweet.data.model.Twitter;
-import com.mmga.mmgahottweet.data.transformer.LoadDataTransFormer;
 
 import java.util.List;
 
@@ -18,8 +17,6 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class DataProvider {
-
-    private Observable<Twitter> observable;
 
     private String content;
     private String maxId;
@@ -42,13 +39,13 @@ public class DataProvider {
 
 
     public void loadData(final DataProviderCallback callback, final int loadType) {
-        Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
+        Observable<Twitter> observable;
         if (loadType == Constant.LOAD_TYPE_NEW) {
             observable = SearchFactory.search(content, langPos, resultType, geoCode);
         } else {
             observable = SearchFactory.search(content, maxId, langPos, resultType, geoCode);
         }
-        observable.compose(loadDataTransFormer)
+        observable.compose(new LoadDataTransFormer())
                 .map(new Func1<Twitter, List<Status>>() {
                     @Override
                     public List<Status> call(Twitter twitter) {

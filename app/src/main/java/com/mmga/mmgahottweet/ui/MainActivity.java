@@ -182,34 +182,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void authAndLoadData() {
-        dataProvider.setGeoCode(mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO);
-        dataProvider.setContent(EncodeUtil.urlEncodeString(mCurrentSearchText));
-        dataProvider.setLangPos(mLangPos);
-        dataProvider.setResultType(mResultType);
+        initDataProvider(mCurrentSearchText);
         dataProvider.authAndLoadData(this);
     }
 
     private void loadData(String content,int loadType) {
-        dataProvider.setGeoCode(mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO);
-        dataProvider.setContent(EncodeUtil.urlEncodeString(content));
-        dataProvider.setLangPos(mLangPos);
-        dataProvider.setMaxId(maxId);
-        dataProvider.setResultType(mResultType);
+        initDataProvider(content);
         dataProvider.loadData(this, loadType);
     }
 
-    @Override
-    public void OnDataError(Throwable e) {
-        mSwipeLayout.setRefreshing(false);
-        isLoadingMore = false;
-        if (e.getMessage().equals("timeout")) {
-            ToastUtil.showLong(getString(R.string.error_timeout));
-        } else {
-            ToastUtil.showLong(getString(R.string.error_no_more_data));
-        }
-        Log.d("mmga", "load error = " + e.getMessage());
+    private void initDataProvider(String content) {
+        dataProvider.setGeoCode(mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO);
+        dataProvider.setContent(EncodeUtil.urlEncodeString(content));
+        dataProvider.setLangPos(mLangPos);
+        dataProvider.setResultType(mResultType);
+        dataProvider.setMaxId(maxId);
     }
 
+
+    @Override
+    public void OnAuthComplete() {
+        mSwipeLayout.setEnabled(true);//正确获取token之后才可以下拉刷新
+        fab.show();//获取token之后才显示搜索按钮
+    }
+
+    @Override
+    public void OnAuthError(Throwable e) {
+        Log.d("mmga", "getTokenError : " + e.getMessage());
+        mSwipeLayout.setRefreshing(false);
+        internetError.setVisibility(View.VISIBLE);
+        retryButton.setOnClickListener(MainActivity.this);
+        ToastUtil.showLong(getString(R.string.error_not_get_token));
+    }
 
     @Override
     public void OnDataSuccess(List<Status> status,int loadType) {
@@ -230,20 +234,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.d("mmga", "load completed");
     }
 
-    @Override
-    public void OnAuthComplete() {
-        mSwipeLayout.setEnabled(true);//正确获取token之后才可以下拉刷新
-        fab.show();//获取token之后才显示搜索按钮
-    }
 
     @Override
-    public void OnAuthError(Throwable e) {
-        Log.d("mmga", "getTokenError : " + e.getMessage());
+    public void OnDataError(Throwable e) {
         mSwipeLayout.setRefreshing(false);
-        internetError.setVisibility(View.VISIBLE);
-        retryButton.setOnClickListener(MainActivity.this);
-        ToastUtil.showLong(getString(R.string.error_not_get_token));
+        isLoadingMore = false;
+        if (e.getMessage().equals("timeout")) {
+            ToastUtil.showLong(getString(R.string.error_timeout));
+        } else {
+            ToastUtil.showLong(getString(R.string.error_no_more_data));
+        }
+        Log.d("mmga", "load error = " + e.getMessage());
     }
+
 
     @Override
     public void onClick(View v) {
@@ -379,6 +382,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
     private void startSettingsActivity() {
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         i.putExtra("langPos", mLangPos);
@@ -386,7 +390,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i.putExtra("needGeo", mNeedGeo);
         startActivityForResult(i, REQUEST_CODE);
     }
-
 
     private void linkToGithub(String project) {
         String url = "http://www.github.com/mmga/" + project;

@@ -1,4 +1,4 @@
-package com.mmga.mmgahottweet.data.transformer;
+package com.mmga.mmgahottweet.provider;
 
 import com.mmga.mmgahottweet.data.model.Twitter;
 

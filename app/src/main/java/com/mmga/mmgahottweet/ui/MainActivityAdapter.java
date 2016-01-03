@@ -20,7 +20,6 @@ import java.util.List;
 public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.MyViewHolder> {
 
     private List<Status> itemList = new ArrayList<>();
-    private Uri uri;
 
     public MainActivityAdapter() {
 
@@ -51,6 +50,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
         Status status = itemList.get(position);
 
+        Uri uri;
         if (status.getReTweet() != null) {
             //转推者信息
             holder.rtLayout.setVisibility(View.VISIBLE);

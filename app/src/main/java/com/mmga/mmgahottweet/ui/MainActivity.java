@@ -32,31 +32,20 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.mmga.mmgahottweet.Constant;
 import com.mmga.mmgahottweet.R;
-import com.mmga.mmgahottweet.data.SearchFactory;
-import com.mmga.mmgahottweet.data.ServiceGenerator;
-import com.mmga.mmgahottweet.data.TweetApi;
 import com.mmga.mmgahottweet.data.model.Status;
-import com.mmga.mmgahottweet.data.model.Token;
-import com.mmga.mmgahottweet.data.model.Twitter;
-import com.mmga.mmgahottweet.data.transformer.LoadDataTransFormer;
+import com.mmga.mmgahottweet.provider.DataProvider;
+import com.mmga.mmgahottweet.provider.DataProviderCallback;
 import com.mmga.mmgahottweet.ui.transformer.InsetViewTransformer;
+import com.mmga.mmgahottweet.utils.EncodeUtil;
 import com.mmga.mmgahottweet.utils.GeoUtil;
 import com.mmga.mmgahottweet.utils.SharedPrefsUtil;
 import com.mmga.mmgahottweet.utils.StatusBarCompat;
 import com.mmga.mmgahottweet.utils.ToastUtil;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, DataProviderCallback {
     private static final int REQUEST_CODE = 1;
     private MainActivityAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -64,20 +53,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private BottomSheetLayout bottomSheet;
     private Toolbar toolbar;
-    private RecyclerView mRecyclerView;
     private LinearLayout internetError;
     private TextView retryButton;
     private FloatingActionButton fab;
-    private Observable<Twitter> observable;
     private View sheetView;
+    private boolean isLoadingMore;
+    DataProvider dataProvider = DataProvider.getInstance();
 
 
+    private boolean mNeedGeo;
     private String mCurrentSearchText;
     private String maxId;
     private int mLangPos;
-    private boolean isLoadingMore;
     private String mResultType;
-    private boolean mNeedGeo;
     private String mGeoCode;
 
 
@@ -89,13 +77,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
         ToastUtil.register(this);
 
-        initPrefs();//读取初始设置
-        init();
-        getInitToken();
+        initConfigs();//读取初始设置
+        initViews();
+        authAndLoadData();
 
     }
 
-    private void init() {
+    private void initViews() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
@@ -104,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadData(mCurrentSearchText);
+                loadData(mCurrentSearchText,Constant.LOAD_TYPE_NEW);
             }
         });
         mSwipeLayout.post(new Runnable() {//把setRefreshing(true)排队，确保能获得位置信息
@@ -127,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupDrawerContent(mNavigationView);
 
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MainActivityAdapter();
         mRecyclerView.setAdapter(mAdapter);
@@ -172,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 ToastUtil.showShort(getString(R.string.orz));
                                 break;
                             case R.id.nav_settings:
-                                openSettingsActivity();
+                                startSettingsActivity();
                             default:
                                 break;
 
@@ -184,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         );
     }
 
-    private void initPrefs() {
+    private void initConfigs() {
         mGeoCode = GeoUtil.getGeocode(this);
         mCurrentSearchText = SharedPrefsUtil.getValue(this, "config", "lastSearchedText", Constant.DEFAULT_CONTENT);
         mLangPos = SharedPrefsUtil.getValue(this, "config", "langPos", Constant.LANG_DEFAULT);
@@ -193,117 +181,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private void loadData(String content) {
-        String geoString = mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO;
-        String encodedString = urlEncodeString(content);
-        Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString, mLangPos, mResultType, geoString);
-        observable.compose(loadDataTransFormer)
-                .map(new Func1<Twitter, List<Status>>() {
-                    @Override
-                    public List<Status> call(Twitter twitter) {
-                        return twitter.getStatuses();
-                    }
-                })
-                .subscribe(new Subscriber<List<Status>>() {
-                    @Override
-                    public void onCompleted() {
-                        mSwipeLayout.setRefreshing(false);
-                        isLoadingMore = false;
-                        Log.d("mmga", "loadData completed");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mSwipeLayout.setRefreshing(false);
-                        isLoadingMore = false;
-                        if (e.getMessage().equals("timeout")) {
-                            ToastUtil.showLong(getString(R.string.error_timeout));
-                        } else {
-                            ToastUtil.showLong(getString(R.string.error_data_not_found));
-                        }
-                        Log.d("mmga", "loadData error :" + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(List<Status> status) {
-                        mAdapter.refreshAdapterData(status);
-                        String lastId = status.get(status.size() - 1).getLastId();
-                        maxId = String.valueOf(Long.valueOf(lastId) - 1); //lastId是最后一个的id，之后请求的最大id要比它小
-                    }
-                });
+    private void authAndLoadData() {
+        initDataProvider(mCurrentSearchText);
+        dataProvider.authAndLoadData(this);
     }
 
-    private void loadMoreData(String content) {
-        String geoString = mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO;
-        String encodedString = urlEncodeString(content);
-        Observable.Transformer<Twitter, Twitter> loadDataTransFormer = new LoadDataTransFormer();
-        observable = SearchFactory.search(encodedString, maxId, mLangPos, mResultType, geoString);
-        observable.compose(loadDataTransFormer)
-                .subscribe(new Subscriber<Twitter>() {
-                    @Override
-                    public void onCompleted() {
-                        mSwipeLayout.setRefreshing(false);
-                        isLoadingMore = false;
-                        Log.d("mmga", "loadMore completed");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mSwipeLayout.setRefreshing(false);
-                        isLoadingMore = false;
-                        if (e.getMessage().equals("timeout")) {
-                            ToastUtil.showLong(getString(R.string.error_timeout));
-                        } else {
-                            ToastUtil.showLong(getString(R.string.error_no_more_data));
-                        }
-                        Log.d("mmga", "loadMore error = " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(Twitter t) {
-                        List<Status> status = t.getStatuses();
-                        String lastId = status.get(status.size() - 1).getLastId();
-                        //lastId是最后一个的id，之后请求的最大id要比它小
-                        maxId = String.valueOf(Long.valueOf(lastId) - 1);
-                        mAdapter.addAdapterData(status);
-                    }
-                });
+    private void loadData(String content,int loadType) {
+        initDataProvider(content);
+        dataProvider.loadData(this, loadType);
     }
 
-    private void getInitToken() {
-        TweetApi tokenService = ServiceGenerator.createService(TweetApi.class);
-        tokenService.getToken("client_credentials")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .filter(new Func1<Token, Boolean>() {
-                    @Override
-                    public Boolean call(Token token) {
-                        return token.getTokenType().equals("bearer");
-                    }
-                })
-                .subscribe(new Subscriber<Token>() {
-                    @Override
-                    public void onCompleted() {
-                        mSwipeLayout.setEnabled(true);//正确获取token之后才可以下拉刷新
-                        fab.show();//获取token之后才能搜索
-                        loadData(mCurrentSearchText);
-                    }
+    private void initDataProvider(String content) {
+        dataProvider.setGeoCode(mNeedGeo ? mGeoCode : Constant.DO_NOT_GEO);
+        dataProvider.setContent(EncodeUtil.urlEncodeString(content));
+        dataProvider.setLangPos(mLangPos);
+        dataProvider.setResultType(mResultType);
+        dataProvider.setMaxId(maxId);
+    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("mmga", "getTokenError : " + e.getMessage());
-                        mSwipeLayout.setRefreshing(false);
-                        internetError.setVisibility(View.VISIBLE);
-                        retryButton.setOnClickListener(MainActivity.this);
-                        ToastUtil.showLong(getString(R.string.error_not_get_token));
-                    }
 
-                    @Override
-                    public void onNext(Token token) {
-                        SearchFactory.prepareToSearch(token.getAccessToken());
-                    }
-                });
+    @Override
+    public void OnAuthComplete() {
+        mSwipeLayout.setEnabled(true);//正确获取token之后才可以下拉刷新
+        fab.show();//获取token之后才显示搜索按钮
+    }
+
+    @Override
+    public void OnAuthError(Throwable e) {
+        Log.d("mmga", "getTokenError : " + e.getMessage());
+        mSwipeLayout.setRefreshing(false);
+        internetError.setVisibility(View.VISIBLE);
+        retryButton.setOnClickListener(MainActivity.this);
+        ToastUtil.showLong(getString(R.string.error_not_get_token));
+    }
+
+    @Override
+    public void OnDataSuccess(List<Status> status,int loadType) {
+        if (loadType == Constant.LOAD_TYPE_NEW) {
+            mAdapter.refreshAdapterData(status);
+        } else {
+            mAdapter.addAdapterData(status);
+        }
+        String lastId = status.get(status.size() - 1).getLastId();
+        //lastId是最后一个的id，之后请求的最大id要比它小
+        maxId = String.valueOf(Long.valueOf(lastId) - 1);
+    }
+
+    @Override
+    public void OnDataComplete() {
+        mSwipeLayout.setRefreshing(false);
+        isLoadingMore = false;
+        Log.d("mmga", "load completed");
+    }
+
+
+    @Override
+    public void OnDataError(Throwable e) {
+        mSwipeLayout.setRefreshing(false);
+        isLoadingMore = false;
+        if (e.getMessage().equals("timeout")) {
+            ToastUtil.showLong(getString(R.string.error_timeout));
+        } else {
+            ToastUtil.showLong(getString(R.string.error_no_more_data));
+        }
+        Log.d("mmga", "load error = " + e.getMessage());
     }
 
 
@@ -312,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case (R.id.fab):
                 fab.hide();
-                openSearchDialog();
+                showSearchDialog();
                 break;
             case (R.id.my_resume):
                 mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -325,31 +266,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.retry):
                 internetError.setVisibility(View.GONE);
-                getInitToken();
+                authAndLoadData();
                 mSwipeLayout.setRefreshing(true);
                 break;
             case R.id.my_connection:
                 makeACall();
                 break;
             case R.id.my_github:
-                openGithub("");
+                linkToGithub("");
                 break;
             case R.id.litedo_url:
-                openGithub("Litedo");
+                linkToGithub("Litedo");
                 break;
             case R.id.cloudcover_url:
-                openGithub("cloudcover");
+                linkToGithub("cloudcover");
                 break;
             case R.id.upclock_url:
-                openGithub("Upclock");
+                linkToGithub("Upclock");
                 break;
             case R.id.metroloading_url:
-                openGithub("MetroLoading");
+                linkToGithub("MetroLoading");
                 break;
         }
     }
-
-
 
 
     //监听RecyclerView滑动事件，用来判断是否滑动到底部，用来加载更多信息
@@ -373,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     && (mLayoutManager.findLastCompletelyVisibleItemPosition() == mAdapter.getItemCount() - 1)
                     && !isLoadingMore
                     && !mAdapter.isShortList()) {
-                loadMoreData(mCurrentSearchText);
+                loadData(mCurrentSearchText, Constant.LOAD_TYPE_MORE);
                 mSwipeLayout.setRefreshing(true);
                 isLoadingMore = true;
             }
@@ -381,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
 
-    private void openSearchDialog() {
+    private void showSearchDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         FrameLayout searchView = (FrameLayout) getLayoutInflater().inflate(R.layout.search_dialog, null);
         final MaterialEditText editText = (MaterialEditText) searchView.findViewById(R.id.edit_text);
@@ -393,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         String input = editText.getText().toString();
 
                         if (!input.equals("")) {
-                            loadData(input);
+                            loadData(input,Constant.LOAD_TYPE_NEW);
                             mSwipeLayout.setRefreshing(true);
                             mCurrentSearchText = input;
                             toolbar.setTitle(input);
@@ -433,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                openSettingsActivity();
+                startSettingsActivity();
                 return true;
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
@@ -443,7 +382,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void openSettingsActivity() {
+
+    private void startSettingsActivity() {
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         i.putExtra("langPos", mLangPos);
         i.putExtra("resultType", mResultType);
@@ -451,8 +391,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(i, REQUEST_CODE);
     }
 
-
-    private void openGithub(String project) {
+    private void linkToGithub(String project) {
         String url = "http://www.github.com/mmga/" + project;
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
@@ -476,14 +415,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private String urlEncodeString(String input) {
-        String encodedStr = "";
-        try {
-            encodedStr = URLEncoder.encode(input, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return encodedStr;
-    }
 
 }

@@ -20,7 +20,9 @@ public class Constant {
     public static final int LANG_GERMAN = 4;
     public static final int LANG_KOREAN = 6;
 
-
+    //loadType
+    public static final int LOAD_TYPE_NEW = 0;
+    public static final int LOAD_TYPE_MORE = 1;
 
     //resultType
     public static final String TYPE_MIX = "mixed";

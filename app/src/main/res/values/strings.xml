@@ -17,7 +17,7 @@
 
     <!--菜单选项-->
     <string name="nav_header_my_name">卞云鹏</string>
-    <string name="nav_header_description">点击查看简历</string>
+    <string name="nav_header_description">编辑</string>
     <string name="sub_items_title">系统</string>
     <string name="nav_home">主页</string>
     <string name="nav_messages">私信</string>

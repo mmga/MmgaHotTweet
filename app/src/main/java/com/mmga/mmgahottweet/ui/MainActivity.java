@@ -19,7 +19,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,13 +28,11 @@ import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.flipboard.bottomsheet.BottomSheetLayout;
 import com.mmga.mmgahottweet.Constant;
 import com.mmga.mmgahottweet.R;
 import com.mmga.mmgahottweet.data.model.Status;
 import com.mmga.mmgahottweet.provider.DataProvider;
 import com.mmga.mmgahottweet.provider.DataProviderCallback;
-import com.mmga.mmgahottweet.ui.transformer.InsetViewTransformer;
 import com.mmga.mmgahottweet.utils.EncodeUtil;
 import com.mmga.mmgahottweet.utils.GeoUtil;
 import com.mmga.mmgahottweet.utils.SharedPrefsUtil;
@@ -51,12 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout mSwipeLayout;
     private DrawerLayout mDrawerLayout;
-    private BottomSheetLayout bottomSheet;
     private Toolbar toolbar;
     private LinearLayout internetError;
     private TextView retryButton;
     private FloatingActionButton fab;
-    private View sheetView;
     private boolean isLoadingMore;
     DataProvider dataProvider = DataProvider.getInstance();
 
@@ -121,23 +116,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(scrollListener);
 
-        bottomSheet = (BottomSheetLayout) findViewById(R.id.bottomsheet);
         internetError = (LinearLayout) findViewById(R.id.internet_error_layout);
         retryButton = (TextView) findViewById(R.id.retry);
-        sheetView = LayoutInflater.from(MainActivity.this).
-                inflate(R.layout.my_resume, bottomSheet, false);
-        sheetView.findViewById(R.id.my_connection).setOnClickListener(this);
-        sheetView.findViewById(R.id.my_github).setOnClickListener(this);
-        sheetView.findViewById(R.id.litedo_url).setOnClickListener(this);
-        sheetView.findViewById(R.id.cloudcover_url).setOnClickListener(this);
-        sheetView.findViewById(R.id.upclock_url).setOnClickListener(this);
-        sheetView.findViewById(R.id.metroloading_url).setOnClickListener(this);
     }
 
     private void setupDrawerContent(final NavigationView mNavigationView) {
 
-        TextView myResume = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.my_resume);
-        myResume.setOnClickListener(this);
         SimpleDraweeView myAvatar = (SimpleDraweeView) mNavigationView.getHeaderView(0).findViewById(R.id.my_avatar);
         Uri uri = Uri.parse("res://com.mmga.mmgahottweet/" + R.drawable.my_avatar);
         myAvatar.setImageURI(uri);
@@ -255,37 +239,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fab.hide();
                 showSearchDialog();
                 break;
-            case (R.id.my_resume):
-                mDrawerLayout.closeDrawer(Gravity.LEFT);
-                bottomSheet.postDelayed(new Runnable() { //设一小段延时，要不屏幕短时间内变亮又变暗，晃瞎眼
-                    @Override
-                    public void run() {
-                        bottomSheet.showWithSheetView(sheetView, new InsetViewTransformer());
-                    }
-                }, 200);
-                break;
             case (R.id.retry):
                 internetError.setVisibility(View.GONE);
                 authAndLoadData();
                 mSwipeLayout.setRefreshing(true);
-                break;
-            case R.id.my_connection:
-                makeACall();
-                break;
-            case R.id.my_github:
-                linkToGithub("");
-                break;
-            case R.id.litedo_url:
-                linkToGithub("Litedo");
-                break;
-            case R.id.cloudcover_url:
-                linkToGithub("cloudcover");
-                break;
-            case R.id.upclock_url:
-                linkToGithub("Upclock");
-                break;
-            case R.id.metroloading_url:
-                linkToGithub("MetroLoading");
                 break;
         }
     }
@@ -389,20 +346,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         i.putExtra("resultType", mResultType);
         i.putExtra("needGeo", mNeedGeo);
         startActivityForResult(i, REQUEST_CODE);
-    }
-
-    private void linkToGithub(String project) {
-        String url = "http://www.github.com/mmga/" + project;
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        startActivity(intent);
-    }
-
-    private void makeACall() {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + "18641199236");
-        intent.setData(data);
-        startActivity(intent);
     }
 
     @Override
